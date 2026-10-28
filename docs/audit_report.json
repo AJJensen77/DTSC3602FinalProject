@@ -1,0 +1,128 @@
+{
+  "ratings": {
+    "n_rows": 32000204,
+    "n_users": 200948,
+    "n_movies_rated": 84432,
+    "nulls": {
+      "userId": 0,
+      "movieId": 0,
+      "rating": 0,
+      "timestamp": 0
+    },
+    "rating_min": 0.5,
+    "rating_max": 5.0,
+    "rating_mean": 3.540395498275757,
+    "rating_median": 3.5,
+    "distinct_rating_values": [
+      0.5,
+      1.0,
+      1.5,
+      2.0,
+      2.5,
+      3.0,
+      3.5,
+      4.0,
+      4.5,
+      5.0
+    ],
+    "rating_value_counts": {
+      "0.5": 525132,
+      "1.0": 946675,
+      "1.5": 531063,
+      "2.0": 2028622,
+      "2.5": 1685386,
+      "3.0": 6054990,
+      "3.5": 4290105,
+      "4.0": 8367654,
+      "4.5": 2974000,
+      "5.0": 4596577
+    },
+    "half_star_share": 0.3126756941924495,
+    "n_duplicate_user_movie_pairs": 0,
+    "timestamp_min": "1995-01-09 11:46:44+00:00",
+    "timestamp_max": "2023-10-13 02:29:07+00:00",
+    "n_timestamps_out_of_range": 0,
+    "ratings_per_user": {
+      "min": 20,
+      "p25": 36.0,
+      "median": 73.0,
+      "p75": 167.0,
+      "p99": 1290.0,
+      "max": 33332,
+      "mean": 159.24619304496684
+    },
+    "n_users_below_20_ratings": 0
+  },
+  "movies": {
+    "n_movies": 87585,
+    "nulls": {
+      "movieId": 0,
+      "title": 0,
+      "genres": 0
+    },
+    "n_duplicate_movie_ids": 0,
+    "n_duplicate_titles": 401,
+    "n_missing_year_in_title": 617,
+    "year_min": 1874.0,
+    "year_max": 2023.0,
+    "n_no_genres_listed": 7080,
+    "n_distinct_genres": 20,
+    "genres": [
+      "(no genres listed)",
+      "Action",
+      "Adventure",
+      "Animation",
+      "Children",
+      "Comedy",
+      "Crime",
+      "Documentary",
+      "Drama",
+      "Fantasy",
+      "Film-Noir",
+      "Horror",
+      "IMAX",
+      "Musical",
+      "Mystery",
+      "Romance",
+      "Sci-Fi",
+      "Thriller",
+      "War",
+      "Western"
+    ],
+    "example_duplicate_titles": [
+      "Aladdin",
+      "Men with Guns",
+      "Dracula",
+      "Saturn 3",
+      "Gossip"
+    ]
+  },
+  "links": {
+    "n_rows": 87585,
+    "nulls": {
+      "movieId": 0,
+      "imdbId": 0,
+      "tmdbId": 124
+    },
+    "tmdb_coverage": 0.9985842324598961
+  },
+  "tags": {
+    "n_rows": 2000072,
+    "n_users": 15848,
+    "n_movies": 51323,
+    "nulls": {
+      "userId": 0,
+      "movieId": 0,
+      "tag": 17,
+      "timestamp": 0
+    }
+  },
+  "cross_file": {
+    "n_rated_movies_missing_from_movies_csv": 0,
+    "n_catalog_movies_with_zero_ratings": 3153,
+    "top_1pct_movies_share_of_ratings": 0.5484963158359866,
+    "top_10pct_movies_share_of_ratings": 0.957031523924035,
+    "n_movies_with_fewer_than_20_ratings": 61082,
+    "median_ratings_per_rated_movie": 5.0
+  }
+}

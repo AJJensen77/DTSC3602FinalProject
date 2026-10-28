@@ -1,0 +1,196 @@
+{
+  "tv_removal": {
+    "title_type_counts": {
+      "movie": 71231,
+      "tvMovie": 6055,
+      "short": 5251,
+      "video": 2315,
+      "tvSpecial": 899,
+      "tvEpisode": 762,
+      "tvMiniSeries": 536,
+      "unknown": 228,
+      "tvShort": 171,
+      "tvSeries": 135,
+      "videoGame": 2
+    },
+    "n_titles_before": 87585,
+    "n_tv_titles_dropped": 2505,
+    "n_titles_after": 85080,
+    "n_unmatched_titles_kept": 228,
+    "n_ratings_before": 32000204,
+    "n_ratings_dropped_with_tv": 106959,
+    "pct_ratings_dropped_with_tv": 0.33424474418975575,
+    "n_ratings_after": 31893245,
+    "dropped_types": [
+      "tvEpisode",
+      "tvMiniSeries",
+      "tvSeries",
+      "tvShort",
+      "tvSpecial",
+      "videoGame"
+    ],
+    "most_rated_dropped_titles": [
+      {
+        "movieId": 66934,
+        "n_ratings": 5158,
+        "clean_title": "Dr. Horrible's Sing-Along Blog",
+        "titleType": "tvMiniSeries"
+      },
+      {
+        "movieId": 7669,
+        "n_ratings": 3088,
+        "clean_title": "Pride and Prejudice",
+        "titleType": "tvMiniSeries"
+      },
+      {
+        "movieId": 159817,
+        "n_ratings": 2948,
+        "clean_title": "Planet Earth",
+        "titleType": "tvMiniSeries"
+      },
+      {
+        "movieId": 170705,
+        "n_ratings": 2811,
+        "clean_title": "Band of Brothers",
+        "titleType": "tvMiniSeries"
+      },
+      {
+        "movieId": 86345,
+        "n_ratings": 2158,
+        "clean_title": "Louis C.K.: Hilarious",
+        "titleType": "tvSpecial"
+      },
+      {
+        "movieId": 86377,
+        "n_ratings": 2134,
+        "clean_title": "Louis C.K.: Shameless",
+        "titleType": "tvSpecial"
+      },
+      {
+        "movieId": 171011,
+        "n_ratings": 1956,
+        "clean_title": "Planet Earth II",
+        "titleType": "tvMiniSeries"
+      },
+      {
+        "movieId": 7842,
+        "n_ratings": 1859,
+        "clean_title": "Dune",
+        "titleType": "tvMiniSeries"
+      },
+      {
+        "movieId": 33154,
+        "n_ratings": 1839,
+        "clean_title": "Enron: The Smartest Guys in the Room",
+        "titleType": "tvEpisode"
+      },
+      {
+        "movieId": 86347,
+        "n_ratings": 1702,
+        "clean_title": "Louis C.K.: Chewed Up",
+        "titleType": "tvSpecial"
+      }
+    ]
+  },
+  "cleaning": {
+    "n_ratings_in": 31893245,
+    "n_orphan_ratings_dropped": 0,
+    "n_duplicate_user_movie_dropped": 0,
+    "n_out_of_range_ratings_dropped": 0,
+    "n_ratings_out": 31893245,
+    "n_users_out": 200948,
+    "n_movies_out": 81999,
+    "n_users_below_20_after_tv_drop": 92,
+    "n_users_below_5_after_tv_drop": 0
+  },
+  "split": {
+    "method": "global chronological quantile split (70 / 15 / 15 by timestamp)",
+    "train_end_utc": "2016-10-01 19:05:03+00:00",
+    "val_end_utc": "2019-11-02 15:33:29+00:00",
+    "train_end_timestamp": 1475348703,
+    "val_end_timestamp": 1572708809,
+    "splits": [
+      {
+        "split": "train",
+        "n_ratings": 22325271,
+        "share_of_ratings": 0.699999984322699,
+        "n_users": 154370,
+        "n_movies": 35661,
+        "start": "1995-01-09 11:46:44+00:00",
+        "end": "2016-10-01 18:59:57+00:00",
+        "mean_rating": 3.5280778408050537,
+        "pct_ratings_from_cold_users": 0.0,
+        "pct_ratings_on_cold_movies": 0.0
+      },
+      {
+        "split": "validation",
+        "n_ratings": 4783987,
+        "share_of_ratings": 0.15000000783865047,
+        "n_users": 31199,
+        "n_movies": 53314,
+        "start": "2016-10-01 19:06:20+00:00",
+        "end": "2019-11-02 15:33:29+00:00",
+        "mean_rating": 3.56447172164917,
+        "pct_ratings_from_cold_users": 84.27882433627015,
+        "pct_ratings_on_cold_movies": 7.867182749451452
+      },
+      {
+        "split": "test",
+        "n_ratings": 4783987,
+        "share_of_ratings": 0.15000000783865047,
+        "n_users": 30272,
+        "n_movies": 68431,
+        "start": "2019-11-02 15:33:31+00:00",
+        "end": "2023-10-13 02:29:07+00:00",
+        "mean_rating": 3.5680787563323975,
+        "pct_ratings_from_cold_users": 90.1200818480485,
+        "pct_ratings_on_cold_movies": 18.5311540353266
+      }
+    ]
+  },
+  "eval_cohort": {
+    "definition": "users with >=20 ratings in train and >=5 ratings in the evaluation split",
+    "min_train_ratings": 20,
+    "min_eval_ratings": 5,
+    "rows": [
+      {
+        "split": "validation",
+        "n_users_total": 31199,
+        "n_users_warm": 6730,
+        "n_users_scored": 5906,
+        "n_ratings_total": 4783987,
+        "n_ratings_scored": 712516,
+        "pct_ratings_scored": 14.893769569189882,
+        "mean_rating_scored": 3.353273391723633,
+        "mean_rating_unscored": 3.6014318466186523
+      },
+      {
+        "split": "test",
+        "n_users_total": 30272,
+        "n_users_warm": 3826,
+        "n_users_scored": 3302,
+        "n_ratings_total": 4783987,
+        "n_ratings_scored": 449755,
+        "pct_ratings_scored": 9.401258824490952,
+        "mean_rating_scored": 3.3178842067718506,
+        "mean_rating_unscored": 3.594040870666504
+      }
+    ]
+  },
+  "half_star_change": {
+    "first_half_star_rating_utc": "2003-02-18 21:34:27+00:00",
+    "share_half_star_after_change": 0.42068253235311315
+  },
+  "aggregates": {
+    "movies_dim": 85080,
+    "rating_value_distribution": 30,
+    "rating_distribution_by_era": 15,
+    "monthly_activity": 346,
+    "user_activity_bins": 8,
+    "movie_popularity_bins": 7,
+    "genre_stats": 20,
+    "split_summary": 3,
+    "eval_cohort": 2,
+    "popularity_concentration": 400
+  }
+}

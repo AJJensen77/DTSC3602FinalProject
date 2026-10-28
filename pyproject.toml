@@ -1,0 +1,36 @@
+[project]
+name = "dtsc-3602-final-project"
+version = "0.1.0"
+description = "Movie recommendation project: can a personalized model beat a popularity baseline?"
+authors = [
+    { name = "Ishika Bhattarai" },
+    { name = "A.J. Jensen", email = "ajense16@charlotte.edu" },
+    { name = "Srijith G Menon" },
+    { name = "Yashvi Patel" },
+    { name = "Yager Range" },
+    { name = "Max Valentine" },
+]
+requires-python = ">=3.12"
+dependencies = [
+    "matplotlib>=3.9",
+    "numpy>=2.0",
+    "pandas>=2.2",
+    "pyarrow>=17.0",
+    "psycopg[binary]>=3.2",
+    "python-dotenv>=1.0",
+    "sqlalchemy>=2.0",
+    "streamlit>=1.40",
+]
+
+[build-system]
+requires = ["uv_build>=0.12.5,<0.13.0"]
+build-backend = "uv_build"
+
+[tool.uv.build-backend]
+module-name = "dtsc_3602_final_project"
+module-root = "src"
+
+[dependency-groups]
+dev = [
+    "modal>=1.0",
+]
