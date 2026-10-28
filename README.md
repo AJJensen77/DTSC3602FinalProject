@@ -18,7 +18,11 @@ Max Valentine
 | Preparation code | `audit_raw.py`, `prepare_data.py`, `make_figures.py`, `make_data_dictionary.py` |
 | Streamlit dashboard | `app.py` (Supabase-backed), deployed via `modal_app.py` |
 
-**Live dashboard:** _(added once deployed — see "Deploying" below)_
+**Live dashboard:** https://ajjensen77--dtsc-3602-final-project-d2-run.us-east.modal.run
+
+> The Supabase free tier pauses a project after about a week of inactivity, which
+> takes the dashboard's data with it. If the page loads but reports a database
+> error, restore the project from the Supabase dashboard and it will recover.
 
 ### Headline findings
 
@@ -82,10 +86,20 @@ path is the Supabase one.
 
 ### Deploying
 
+`modal_app.py` reads `DATABASE_URL` from your local `.env` at deploy time, so no
+named Modal secret is needed:
+
 ```bash
-uv run modal secret create supabase-db-url DATABASE_URL=postgresql://...
 uv run modal deploy modal_app.py
+uv run modal run verify_deployment.py   # confirms Supabase is reachable from Modal
 ```
+
+`verify_deployment.py` matters because an HTTP 200 from the dashboard only proves
+Streamlit booted — the data load happens over a websocket afterwards. It runs the
+dashboard's query inside the deployed image and prints the row counts it can read.
+
+On Windows, prefix with `PYTHONUTF8=1` if the Modal CLI raises a `charmap` codec
+error while rendering its progress output.
 
 ## Reserved test data
 

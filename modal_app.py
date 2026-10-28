@@ -3,10 +3,9 @@
 Usage:
     uv run modal deploy modal_app.py
 
-Requires a Modal secret named "supabase-db-url" holding a DATABASE_URL key with
-the Supabase Postgres connection string:
-
-    uv run modal secret create supabase-db-url DATABASE_URL=postgresql://...
+Reads DATABASE_URL from the local .env file at deploy time (see .env.example),
+so no named Modal secret is required. .env is gitignored, so the credential is
+never committed - but it is uploaded to Modal when you deploy.
 """
 
 import shlex
@@ -42,7 +41,10 @@ image = (
 )
 
 
-@app.function(image=image, secrets=[modal.Secret.from_name("supabase-db-url")])
+# Credentials are read from the local .env at deploy time rather than from a
+# named secret, so this project does not share (or clobber) the secret the
+# earlier homework apps use. .env is gitignored and never committed.
+@app.function(image=image, secrets=[modal.Secret.from_dotenv(LOCAL_DIR)])
 @modal.concurrent(max_inputs=100)
 @modal.web_server(8000, startup_timeout=120)
 def run():
