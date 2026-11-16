@@ -1,0 +1,5 @@
+# Python
+__pycache__/
+
+# Model artifacts for the website API (rebuild: uv run python "Gradient boost model/build_site_model.py")
+api/artifacts/

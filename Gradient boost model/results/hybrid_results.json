@@ -1,0 +1,494 @@
+{
+  "cohort": {
+    "tune_users": 2953,
+    "report_users": 2953
+  },
+  "baseline_tuning": {
+    "None": {
+      "precision_at_10": 0.1047748052827633,
+      "recall_at_10": 0.021088256337660795,
+      "ndcg_at_10": 0.11562513088989446,
+      "hit_rate_at_10": 0.4544530985438537,
+      "liked_share_of_rated_recs": 0.7950035238305616,
+      "mean_recs_per_user": 10.0,
+      "distinct_films_recommended": 245,
+      "share_recs_top1pct_films": 0.9985099898408398,
+      "median_train_ratings_of_recs": 51439.0,
+      "n_users": 2953
+    },
+    "1825": {
+      "precision_at_10": 0.14436166610226892,
+      "recall_at_10": 0.032321241658796906,
+      "ndcg_at_10": 0.1576253509853299,
+      "hit_rate_at_10": 0.5560447003047748,
+      "liked_share_of_rated_recs": 0.79222601813311,
+      "mean_recs_per_user": 10.0,
+      "distinct_films_recommended": 260,
+      "share_recs_top1pct_films": 0.8546901456146292,
+      "median_train_ratings_of_recs": 41703.0,
+      "n_users": 2953
+    },
+    "730": {
+      "precision_at_10": 0.15580765323399934,
+      "recall_at_10": 0.03623601158679255,
+      "ndcg_at_10": 0.16992530792734095,
+      "hit_rate_at_10": 0.5824585167626143,
+      "liked_share_of_rated_recs": 0.7935059607527962,
+      "mean_recs_per_user": 10.0,
+      "distinct_films_recommended": 254,
+      "share_recs_top1pct_films": 0.7486285133762276,
+      "median_train_ratings_of_recs": 35828.0,
+      "n_users": 2953
+    },
+    "365": {
+      "precision_at_10": 0.1676261429055198,
+      "recall_at_10": 0.03962110907408538,
+      "ndcg_at_10": 0.18466755074993205,
+      "hit_rate_at_10": 0.6176769387064003,
+      "liked_share_of_rated_recs": 0.7895542530737785,
+      "mean_recs_per_user": 10.0,
+      "distinct_films_recommended": 249,
+      "share_recs_top1pct_films": 0.6328140873687775,
+      "median_train_ratings_of_recs": 25961.0,
+      "n_users": 2953
+    }
+  },
+  "baseline_selected": {
+    "window_days": 365
+  },
+  "training_rows": {
+    "history_ratings": 18901090,
+    "target_ratings": 209966,
+    "users": 3904,
+    "target_window_start": "2014-10-01"
+  },
+  "hybrid_selected": {
+    "regressor_params": {
+      "learning_rate": 0.05,
+      "max_leaf_nodes": 127,
+      "max_iter": 500
+    },
+    "min_votes": 100000,
+    "popularity_weight": 0.7,
+    "popularity_source": "recent",
+    "tune_precision_at_10": 0.17798848628513378,
+    "n_training_rows": 209300,
+    "n_trees": 500,
+    "imdb_calibration": [
+      0.49246063592481903,
+      0.015074089381938655
+    ]
+  },
+  "report": {
+    "hybrid": {
+      "precision_at_10": 0.17521164917033524,
+      "recall_at_10": 0.04283434367567805,
+      "ndcg_at_10": 0.19038664164047545,
+      "hit_rate_at_10": 0.6261429055198103,
+      "liked_share_of_rated_recs": 0.860862893599174,
+      "mean_recs_per_user": 9.977649847612597,
+      "distinct_films_recommended": 763,
+      "share_recs_top1pct_films": 0.7016019549280478,
+      "median_train_ratings_of_recs": 29890.0,
+      "n_users": 2953,
+      "rmse": 0.8088414545141335
+    },
+    "baseline": {
+      "precision_at_10": 0.1647477141889604,
+      "recall_at_10": 0.03916114893331629,
+      "ndcg_at_10": 0.17989097214558067,
+      "hit_rate_at_10": 0.593972231628852,
+      "liked_share_of_rated_recs": 0.7793737586591096,
+      "mean_recs_per_user": 10.0,
+      "distinct_films_recommended": 223,
+      "share_recs_top1pct_films": 0.628818151032848,
+      "median_train_ratings_of_recs": 25961.0,
+      "n_users": 2953
+    },
+    "difference_hybrid_minus_baseline": {
+      "precision": {
+        "diff": 0.010463934981374873,
+        "ci95_low": 0.00663647138503217,
+        "ci95_high": 0.014359126312224853,
+        "n_users": 2953
+      },
+      "recall": {
+        "diff": 0.003673194742361757,
+        "ci95_low": 0.0018901437013544018,
+        "ci95_high": 0.005374050858126253,
+        "n_users": 2946
+      },
+      "ndcg": {
+        "diff": 0.010495669494894763,
+        "ci95_low": 0.00616553884109958,
+        "ci95_high": 0.01466074153780779,
+        "n_users": 2946
+      },
+      "hit_rate": {
+        "diff": 0.032170673890958346,
+        "ci95_low": 0.017947849644429394,
+        "ci95_high": 0.046063325431764265,
+        "n_users": 2953
+      }
+    },
+    "recommendable_films": {
+      "hybrid": 14417,
+      "baseline": 4901
+    }
+  },
+  "rating_accuracy": {
+    "n_ratings": 342231,
+    "pct_validation_ratings_scorable": 99.30504372856372,
+    "hybrid_rmse": 0.8088414545141335,
+    "hybrid_mae": 0.6056885566445782,
+    "bias_only_rmse": 0.8789618015289307,
+    "global_mean_rmse": 1.019028663635254
+  },
+  "error_analysis": {
+    "by_user_group": [
+      {
+        "group": "history_size",
+        "bucket": "20-49",
+        "n_users": 251,
+        "hybrid_precision": 0.19880478087649406,
+        "baseline_precision": 0.18645418326693225,
+        "hybrid_recall": 0.0752060333303846,
+        "baseline_recall": 0.06878966243748232
+      },
+      {
+        "group": "history_size",
+        "bucket": "50-99",
+        "n_users": 347,
+        "hybrid_precision": 0.17118155619596542,
+        "baseline_precision": 0.16484149855907781,
+        "hybrid_recall": 0.050764733640715536,
+        "baseline_recall": 0.047540749536761406
+      },
+      {
+        "group": "history_size",
+        "bucket": "100-249",
+        "n_users": 731,
+        "hybrid_precision": 0.1625170998632011,
+        "baseline_precision": 0.14733242134062927,
+        "hybrid_recall": 0.042414845577940376,
+        "baseline_recall": 0.036107561221386496
+      },
+      {
+        "group": "history_size",
+        "bucket": "250-999",
+        "n_users": 1275,
+        "hybrid_precision": 0.17168627450980392,
+        "baseline_precision": 0.16360784313725493,
+        "hybrid_recall": 0.03771334769563677,
+        "baseline_recall": 0.03489233178950594
+      },
+      {
+        "group": "history_size",
+        "bucket": "1000+",
+        "n_users": 349,
+        "hybrid_precision": 0.20171919770773641,
+        "baseline_precision": 0.18968481375358168,
+        "hybrid_recall": 0.031241097332442517,
+        "baseline_recall": 0.0315137943488993
+      },
+      {
+        "group": "user_generosity",
+        "bucket": "harsh (low mean)",
+        "n_users": 985,
+        "hybrid_precision": 0.15248730964467003,
+        "baseline_precision": 0.13959390862944165,
+        "hybrid_recall": 0.03690599653619214,
+        "baseline_recall": 0.03356906921316779
+      },
+      {
+        "group": "user_generosity",
+        "bucket": "middle",
+        "n_users": 984,
+        "hybrid_precision": 0.19339430894308945,
+        "baseline_precision": 0.18160569105691057,
+        "hybrid_recall": 0.044298892870260544,
+        "baseline_recall": 0.0400543022738193
+      },
+      {
+        "group": "user_generosity",
+        "bucket": "generous (high mean)",
+        "n_users": 984,
+        "hybrid_precision": 0.17977642276422764,
+        "baseline_precision": 0.17306910569105693,
+        "hybrid_recall": 0.047277019374474996,
+        "baseline_recall": 0.04383915863389717
+      },
+      {
+        "group": "gap_since_last_train_rating",
+        "bucket": "<1 month",
+        "n_users": 563,
+        "hybrid_precision": 0.19626998223801068,
+        "baseline_precision": 0.18099467140319717,
+        "hybrid_recall": 0.02870548699762911,
+        "baseline_recall": 0.024662338862581432
+      },
+      {
+        "group": "gap_since_last_train_rating",
+        "bucket": "1-12 months",
+        "n_users": 1250,
+        "hybrid_precision": 0.15448,
+        "baseline_precision": 0.14176,
+        "hybrid_recall": 0.037429018584839935,
+        "baseline_recall": 0.03402465015884257
+      },
+      {
+        "group": "gap_since_last_train_rating",
+        "bucket": "1-5 years",
+        "n_users": 993,
+        "hybrid_precision": 0.16545820745216516,
+        "baseline_precision": 0.15901309164149047,
+        "hybrid_recall": 0.0523286996629119,
+        "baseline_recall": 0.04900031158921691
+      },
+      {
+        "group": "gap_since_last_train_rating",
+        "bucket": "5+ years",
+        "n_users": 147,
+        "hybrid_precision": 0.336734693877551,
+        "baseline_precision": 0.336734693877551,
+        "hybrid_recall": 0.07886390214544131,
+        "baseline_recall": 0.07200298474019047
+      }
+    ],
+    "by_film_popularity": [
+      {
+        "popularity_bucket": "0 (IMDb only)",
+        "n": 62394,
+        "rmse": 0.7916112016041916,
+        "mean_error": -0.0009987663811046378
+      },
+      {
+        "popularity_bucket": "1-19",
+        "n": 21775,
+        "rmse": 0.821421414541433,
+        "mean_error": -0.00726042867012901
+      },
+      {
+        "popularity_bucket": "20-99",
+        "n": 21391,
+        "rmse": 0.783785210403735,
+        "mean_error": 0.006605251460078248
+      },
+      {
+        "popularity_bucket": "100-999",
+        "n": 58028,
+        "rmse": 0.7933615733588419,
+        "mean_error": 0.039055997229570136
+      },
+      {
+        "popularity_bucket": "1000+",
+        "n": 178643,
+        "rmse": 0.8210911993267197,
+        "mean_error": 0.0017804460035614348
+      }
+    ],
+    "by_genre": [
+      {
+        "genre": "(no genres listed)",
+        "n": 2806,
+        "rmse": 0.8660303071352108,
+        "mean_error": -0.09701039316375039
+      },
+      {
+        "genre": "IMAX",
+        "n": 16574,
+        "rmse": 0.8481818287248215,
+        "mean_error": -0.005569256187859918
+      },
+      {
+        "genre": "Comedy",
+        "n": 104368,
+        "rmse": 0.8372529870719713,
+        "mean_error": 0.03574184186045129
+      },
+      {
+        "genre": "Fantasy",
+        "n": 38834,
+        "rmse": 0.8331692513892384,
+        "mean_error": 0.0016794111436699308
+      },
+      {
+        "genre": "Horror",
+        "n": 34346,
+        "rmse": 0.8316749905827018,
+        "mean_error": -0.011801811212585217
+      },
+      {
+        "genre": "Musical",
+        "n": 7436,
+        "rmse": 0.8307743827259427,
+        "mean_error": 0.028579523992714635
+      },
+      {
+        "genre": "Romance",
+        "n": 44415,
+        "rmse": 0.8259756542824073,
+        "mean_error": 0.048802290254629156
+      },
+      {
+        "genre": "Animation",
+        "n": 26103,
+        "rmse": 0.8253093622103227,
+        "mean_error": 0.029781239396096993
+      },
+      {
+        "genre": "Sci-Fi",
+        "n": 67570,
+        "rmse": 0.8235542270099334,
+        "mean_error": -0.04446756939857037
+      },
+      {
+        "genre": "Children",
+        "n": 25020,
+        "rmse": 0.8199061783038039,
+        "mean_error": 0.03039315128252134
+      },
+      {
+        "genre": "Adventure",
+        "n": 74565,
+        "rmse": 0.8199043878722831,
+        "mean_error": -0.01319094648329254
+      },
+      {
+        "genre": "Action",
+        "n": 101367,
+        "rmse": 0.8100998701297402,
+        "mean_error": -0.002870984148439589
+      },
+      {
+        "genre": "Documentary",
+        "n": 8981,
+        "rmse": 0.8079376163269394,
+        "mean_error": 0.022985954739567223
+      },
+      {
+        "genre": "Thriller",
+        "n": 90334,
+        "rmse": 0.7952181073898572,
+        "mean_error": -0.008607381728724571
+      },
+      {
+        "genre": "Mystery",
+        "n": 26144,
+        "rmse": 0.793873503157937,
+        "mean_error": -0.009322246352640092
+      },
+      {
+        "genre": "Drama",
+        "n": 143322,
+        "rmse": 0.7901075284272087,
+        "mean_error": 0.011879046087897045
+      },
+      {
+        "genre": "Western",
+        "n": 5572,
+        "rmse": 0.7845745074672361,
+        "mean_error": -0.021094844982881118
+      },
+      {
+        "genre": "War",
+        "n": 12715,
+        "rmse": 0.7810285392027597,
+        "mean_error": 0.023962080106182077
+      },
+      {
+        "genre": "Crime",
+        "n": 48544,
+        "rmse": 0.7752169247434496,
+        "mean_error": 0.012120032548063518
+      },
+      {
+        "genre": "Film-Noir",
+        "n": 2605,
+        "rmse": 0.7512412819114349,
+        "mean_error": 0.02038739705847243
+      }
+    ]
+  },
+  "ablations": {
+    "Full model": {
+      "precision_at_10": 0.17521164917033524,
+      "recall_at_10": 0.04283434367567805,
+      "ndcg_at_10": 0.19038664164047545,
+      "hit_rate_at_10": 0.6261429055198103,
+      "liked_share_of_rated_recs": 0.860862893599174,
+      "mean_recs_per_user": 9.977649847612597,
+      "distinct_films_recommended": 763,
+      "share_recs_top1pct_films": 0.7016019549280478,
+      "median_train_ratings_of_recs": 29890.0,
+      "n_users": 2953,
+      "rmse": 0.8088414545141335
+    },
+    "Without IMDb features": {
+      "precision_at_10": 0.1736539112766678,
+      "recall_at_10": 0.04281038919863297,
+      "ndcg_at_10": 0.18828925687289794,
+      "hit_rate_at_10": 0.6190314933965458,
+      "liked_share_of_rated_recs": 0.8484666731355474,
+      "mean_recs_per_user": 9.978665763630207,
+      "distinct_films_recommended": 670,
+      "share_recs_top1pct_films": 0.7120168323887739,
+      "median_train_ratings_of_recs": 31129.0,
+      "n_users": 2953,
+      "rmse": 0.8250864655050842
+    },
+    "Without actors & director": {
+      "precision_at_10": 0.16705045716220793,
+      "recall_at_10": 0.041088200538674936,
+      "ndcg_at_10": 0.1801947839458997,
+      "hit_rate_at_10": 0.6075177785303082,
+      "liked_share_of_rated_recs": 0.8466536580161191,
+      "mean_recs_per_user": 9.975956654249915,
+      "distinct_films_recommended": 711,
+      "share_recs_top1pct_films": 0.6832546929631013,
+      "median_train_ratings_of_recs": 29711.0,
+      "n_users": 2953,
+      "rmse": 0.8126991273126755
+    },
+    "Without collaborative (kNN)": {
+      "precision_at_10": 0.1715543515069421,
+      "recall_at_10": 0.042519946030946464,
+      "ndcg_at_10": 0.1868501445138033,
+      "hit_rate_at_10": 0.6237724348120556,
+      "liked_share_of_rated_recs": 0.8481947465957618,
+      "mean_recs_per_user": 9.969522519471724,
+      "distinct_films_recommended": 601,
+      "share_recs_top1pct_films": 0.7160665760869566,
+      "median_train_ratings_of_recs": 30499.0,
+      "n_users": 2953,
+      "rmse": 0.8195041540494807
+    },
+    "Genre + user/movie stats only": {
+      "precision_at_10": 0.16285133762275653,
+      "recall_at_10": 0.03972857667812766,
+      "ndcg_at_10": 0.17522518193490216,
+      "hit_rate_at_10": 0.6014222824246529,
+      "liked_share_of_rated_recs": 0.8400434598525602,
+      "mean_recs_per_user": 9.990179478496444,
+      "distinct_films_recommended": 557,
+      "share_recs_top1pct_films": 0.7035693705298125,
+      "median_train_ratings_of_recs": 31129.0,
+      "n_users": 2953,
+      "rmse": 0.8477131242112412
+    },
+    "Popularity baseline": {
+      "precision_at_10": 0.1647477141889604,
+      "recall_at_10": 0.03916114893331629,
+      "ndcg_at_10": 0.17989097214558067,
+      "hit_rate_at_10": 0.593972231628852,
+      "liked_share_of_rated_recs": 0.7793737586591096,
+      "mean_recs_per_user": 10.0,
+      "distinct_films_recommended": 223,
+      "share_recs_top1pct_films": 0.628818151032848,
+      "median_train_ratings_of_recs": 25961.0,
+      "n_users": 2953
+    }
+  },
+  "reserved_test_untouched": true,
+  "quick_mode": false
+}
