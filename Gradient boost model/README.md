@@ -14,7 +14,8 @@ outside it is five added dependencies in the root `pyproject.toml`/`uv.lock`
 | Path | What it is |
 |---|---|
 | `gbmodel/hybrid.py` | `TasteProfileTransformer` (features) and `HybridRecommender` (gradient boosting) |
-| `gbmodel/recommenders.py` | Popularity baseline; item-kNN similarity used as a feature |
+| `gbmodel/recommenders.py` | Shared recommender contract; item-kNN similarity used as a feature |
+| `baseline/` | **Popularity baseline** all models are compared against: code, its own evaluation, results ([README](baseline/README.md)) |
 | `gbmodel/imdb_features.py` | IMDb rating, top-billed cast, director loaders |
 | `prepare_imdb.py` | Builds `data/processed/movie_features.parquet` |
 | `evaluate_hybrid.py` | Training, tuning, evaluation vs baseline, ablations, error analysis |

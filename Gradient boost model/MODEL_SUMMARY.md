@@ -110,6 +110,9 @@ different model, it can be served behind the same API and website** without UI c
 
 Everything lives in `Gradient boost model/` (delete the folder to remove it). See
 `Gradient boost model/README.md` for how to rerun the evaluation and redeploy.
+The popularity baseline has its own subfolder, `baseline/`, with a standalone evaluation
+(`baseline/evaluate_baseline.py`) on the same users and split, so **other group models can
+be scored against the same baseline numbers**.
 Detailed numbers: `results/hybrid_results.json`; figures: `figures/fig6–fig8`.
 
 *AI assistance: built with Claude Code (code, evaluation, and drafting this summary), per the

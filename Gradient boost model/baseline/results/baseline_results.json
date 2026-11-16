@@ -1,0 +1,30 @@
+{
+  "definition": "Most-rated films in the last `window_days` of training among films with >=20 training ratings and a damped mean (50 pseudo-ratings) >= 3.5; the user's already-rated films are skipped.",
+  "selected": {
+    "window_days": 365
+  },
+  "report_half": {
+    "precision_at_10": 0.1647477141889604,
+    "recall_at_10": 0.03916114893331629,
+    "ndcg_at_10": 0.17989097214558067,
+    "hit_rate_at_10": 0.593972231628852,
+    "liked_share_of_rated_recs": 0.7793737586591096,
+    "mean_recs_per_user": 10.0,
+    "distinct_films_recommended": 223,
+    "share_recs_top1pct_films": 0.628818151032848,
+    "median_train_ratings_of_recs": 25961.0,
+    "n_users": 2953
+  },
+  "example_top10_for_a_new_user": [
+    "The Martian",
+    "Interstellar",
+    "Inside Out",
+    "The Imitation Game",
+    "American Beauty",
+    "Wolf of Wall Street, The",
+    "Monsters, Inc.",
+    "Eternal Sunshine of the Spotless Mind",
+    "Good Will Hunting",
+    "Ex Machina"
+  ]
+}

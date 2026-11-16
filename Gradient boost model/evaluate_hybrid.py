@@ -27,8 +27,9 @@ import pandas as pd
 
 from dtsc_3602_final_project import viz
 from dtsc_3602_final_project.paths import PROCESSED_DIR, RESERVED_TEST_DIR
+from baseline.popularity import PopularityRecommender
 from gbmodel.hybrid import HybridRecommender
-from gbmodel.recommenders import LIKE_THRESHOLD, PopularityRecommender
+from gbmodel.recommenders import LIKE_THRESHOLD
 
 HERE = Path(__file__).parent
 DOCS_DIR = HERE / "results"
