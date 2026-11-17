@@ -1,0 +1,568 @@
+{
+  "cohort": {
+    "tune_users": 2953,
+    "report_users": 2953
+  },
+  "selected": {
+    "popularity_damping": 0.3,
+    "n_factors": 192,
+    "min_mean": null,
+    "popularity_weight": 6.0,
+    "tune_precision_at_10": 0.21263122248560784
+  },
+  "report": {
+    "list_model": {
+      "precision_at_10": 0.20822891974263463,
+      "recall_at_10": 0.0524046315044504,
+      "ndcg_at_10": 0.22538743402482514,
+      "hit_rate_at_10": 0.7101252963088385,
+      "liked_share_of_rated_recs": 0.8375621544497948,
+      "mean_recs_per_user": 10.0,
+      "distinct_films_recommended": 569,
+      "share_recs_top1pct_films": 0.5085336945479174,
+      "median_train_ratings_of_recs": 13734.0,
+      "n_users": 2953
+    },
+    "baseline": {
+      "precision_at_10": 0.1647477141889604,
+      "recall_at_10": 0.03916114893331629,
+      "ndcg_at_10": 0.17989097214558067,
+      "hit_rate_at_10": 0.593972231628852,
+      "liked_share_of_rated_recs": 0.7793737586591096,
+      "mean_recs_per_user": 10.0,
+      "distinct_films_recommended": 223,
+      "share_recs_top1pct_films": 0.628818151032848,
+      "median_train_ratings_of_recs": 25961.0,
+      "n_users": 2953
+    },
+    "difference_list_minus_baseline": {
+      "precision": {
+        "diff": 0.04348120555367423,
+        "ci95_low": 0.03772434812055537,
+        "ci95_high": 0.04910260751777853,
+        "n_users": 2953
+      },
+      "recall": {
+        "diff": 0.013243482571134104,
+        "ci95_low": 0.010583491448063467,
+        "ci95_high": 0.015640404562264405,
+        "n_users": 2946
+      },
+      "ndcg": {
+        "diff": 0.04549646187924447,
+        "ci95_low": 0.0390493844168953,
+        "ci95_high": 0.05142073086850743,
+        "n_users": 2946
+      },
+      "hit_rate": {
+        "diff": 0.11615306467998646,
+        "ci95_low": 0.09989840839823907,
+        "ci95_high": 0.13207754825601078,
+        "n_users": 2953
+      }
+    }
+  },
+  "variants_report_half": {
+    "Selected list model": {
+      "precision_at_10": 0.20822891974263463,
+      "recall_at_10": 0.0524046315044504,
+      "ndcg_at_10": 0.22538743402482514,
+      "hit_rate_at_10": 0.7101252963088385,
+      "liked_share_of_rated_recs": 0.8375621544497948,
+      "mean_recs_per_user": 10.0,
+      "distinct_films_recommended": 569,
+      "share_recs_top1pct_films": 0.5085336945479174,
+      "median_train_ratings_of_recs": 13734.0,
+      "n_users": 2953
+    },
+    "Taste only (no popularity blend)": {
+      "precision_at_10": 0.18256010836437522,
+      "recall_at_10": 0.04366292708834311,
+      "ndcg_at_10": 0.1983239723262119,
+      "hit_rate_at_10": 0.6457839485269218,
+      "liked_share_of_rated_recs": 0.8435847532029617,
+      "mean_recs_per_user": 10.0,
+      "distinct_films_recommended": 2696,
+      "share_recs_top1pct_films": 0.2817135116830342,
+      "median_train_ratings_of_recs": 7198.0,
+      "n_users": 2953
+    },
+    "Dropped ignored (weight 0)": {
+      "precision_at_10": 0.20792414493735184,
+      "recall_at_10": 0.053212269355505847,
+      "ndcg_at_10": 0.22534291280589197,
+      "hit_rate_at_10": 0.7087707416186928,
+      "liked_share_of_rated_recs": 0.8283050419749927,
+      "mean_recs_per_user": 10.0,
+      "distinct_films_recommended": 564,
+      "share_recs_top1pct_films": 0.49729089061970877,
+      "median_train_ratings_of_recs": 12792.0,
+      "n_users": 2953
+    },
+    "All lists equal (no signs)": {
+      "precision_at_10": 0.19380291229258378,
+      "recall_at_10": 0.04785923593101208,
+      "ndcg_at_10": 0.21015997384543278,
+      "hit_rate_at_10": 0.6826955638333898,
+      "liked_share_of_rated_recs": 0.7895476154351894,
+      "mean_recs_per_user": 10.0,
+      "distinct_films_recommended": 547,
+      "share_recs_top1pct_films": 0.48022350152387405,
+      "median_train_ratings_of_recs": 12080.0,
+      "n_users": 2953
+    },
+    "Popularity baseline": {
+      "precision_at_10": 0.1647477141889604,
+      "recall_at_10": 0.03916114893331629,
+      "ndcg_at_10": 0.17989097214558067,
+      "hit_rate_at_10": 0.593972231628852,
+      "liked_share_of_rated_recs": 0.7793737586591096,
+      "mean_recs_per_user": 10.0,
+      "distinct_films_recommended": 223,
+      "share_recs_top1pct_films": 0.628818151032848,
+      "median_train_ratings_of_recs": 25961.0,
+      "n_users": 2953
+    }
+  },
+  "error_analysis": {
+    "by_user_group": [
+      {
+        "group": "history_size",
+        "bucket": "20-49",
+        "n_users": 251,
+        "list_precision": 0.22669322709163348,
+        "baseline_precision": 0.18645418326693225,
+        "diff_ci95_low": 0.019113545816733066,
+        "diff_ci95_high": 0.061364541832669324,
+        "list_recall": 0.0902185407605444,
+        "baseline_recall": 0.06878966243748232
+      },
+      {
+        "group": "history_size",
+        "bucket": "50-99",
+        "n_users": 347,
+        "list_precision": 0.2193083573487032,
+        "baseline_precision": 0.16484149855907781,
+        "diff_ci95_low": 0.03804034582132565,
+        "diff_ci95_high": 0.07061239193083574,
+        "list_recall": 0.07195760327854073,
+        "baseline_recall": 0.047540749536761406
+      },
+      {
+        "group": "history_size",
+        "bucket": "100-249",
+        "n_users": 731,
+        "list_precision": 0.20287277701778386,
+        "baseline_precision": 0.14733242134062927,
+        "diff_ci95_low": 0.04418604651162791,
+        "diff_ci95_high": 0.06703146374829001,
+        "list_recall": 0.053331919300795456,
+        "baseline_recall": 0.036107561221386496
+      },
+      {
+        "group": "history_size",
+        "bucket": "250-999",
+        "n_users": 1275,
+        "list_precision": 0.20298039215686275,
+        "baseline_precision": 0.16360784313725493,
+        "diff_ci95_low": 0.030980392156862744,
+        "diff_ci95_high": 0.04690196078431373,
+        "list_recall": 0.04442305086016281,
+        "baseline_recall": 0.03489233178950594
+      },
+      {
+        "group": "history_size",
+        "bucket": "1000+",
+        "n_users": 349,
+        "list_precision": 0.21432664756446995,
+        "baseline_precision": 0.18968481375358168,
+        "diff_ci95_low": 0.010881088825214899,
+        "diff_ci95_high": 0.03896848137535817,
+        "list_recall": 0.03292302667538191,
+        "baseline_recall": 0.0315137943488993
+      },
+      {
+        "group": "user_generosity",
+        "bucket": "harsh (low mean)",
+        "n_users": 985,
+        "list_precision": 0.17593908629441626,
+        "baseline_precision": 0.13959390862944165,
+        "diff_ci95_low": 0.027817258883248732,
+        "diff_ci95_high": 0.0448756345177665,
+        "list_recall": 0.04517961285111154,
+        "baseline_recall": 0.03356906921316779
+      },
+      {
+        "group": "user_generosity",
+        "bucket": "middle",
+        "n_users": 984,
+        "list_precision": 0.21951219512195122,
+        "baseline_precision": 0.18160569105691057,
+        "diff_ci95_low": 0.02794461382113821,
+        "diff_ci95_high": 0.04806910569105691,
+        "list_recall": 0.050825200739920924,
+        "baseline_recall": 0.0400543022738193
+      },
+      {
+        "group": "user_generosity",
+        "bucket": "generous (high mean)",
+        "n_users": 984,
+        "list_precision": 0.2292682926829268,
+        "baseline_precision": 0.17306910569105693,
+        "diff_ci95_low": 0.046239837398373985,
+        "diff_ci95_high": 0.06615853658536584,
+        "list_recall": 0.061176500702661805,
+        "baseline_recall": 0.04383915863389717
+      },
+      {
+        "group": "taste_mainstream",
+        "bucket": "niche taste",
+        "n_users": 985,
+        "list_precision": 0.1884263959390863,
+        "baseline_precision": 0.13949238578680204,
+        "diff_ci95_low": 0.0400989847715736,
+        "diff_ci95_high": 0.05706091370558375,
+        "list_recall": 0.03346608207720122,
+        "baseline_recall": 0.022444574788193537
+      },
+      {
+        "group": "taste_mainstream",
+        "bucket": "middle",
+        "n_users": 984,
+        "list_precision": 0.20538617886178864,
+        "baseline_precision": 0.15904471544715448,
+        "diff_ci95_low": 0.03699186991869919,
+        "diff_ci95_high": 0.0565040650406504,
+        "list_recall": 0.051311953687551495,
+        "baseline_recall": 0.03991374049105324
+      },
+      {
+        "group": "taste_mainstream",
+        "bucket": "mainstream taste",
+        "n_users": 984,
+        "list_precision": 0.23089430894308946,
+        "baseline_precision": 0.1957317073170732,
+        "diff_ci95_low": 0.025403963414634145,
+        "diff_ci95_high": 0.04624237804878049,
+        "list_recall": 0.07243252402484396,
+        "baseline_recall": 0.05512742834132593
+      },
+      {
+        "group": "share_dropped",
+        "bucket": "few dropped",
+        "n_users": 985,
+        "list_precision": 0.23634517766497462,
+        "baseline_precision": 0.1867005076142132,
+        "diff_ci95_low": 0.03908375634517767,
+        "diff_ci95_high": 0.06010913705583756,
+        "list_recall": 0.05435677790649162,
+        "baseline_recall": 0.041276542485815026
+      },
+      {
+        "group": "share_dropped",
+        "bucket": "some dropped",
+        "n_users": 984,
+        "list_precision": 0.21483739837398377,
+        "baseline_precision": 0.17652439024390243,
+        "diff_ci95_low": 0.028658536585365855,
+        "diff_ci95_high": 0.04806910569105691,
+        "list_recall": 0.053492233094122224,
+        "baseline_recall": 0.04265983730688581
+      },
+      {
+        "group": "share_dropped",
+        "bucket": "many dropped",
+        "n_users": 984,
+        "list_precision": 0.17347560975609758,
+        "baseline_precision": 0.1309959349593496,
+        "diff_ci95_low": 0.034143800813008135,
+        "diff_ci95_high": 0.051422764227642276,
+        "list_recall": 0.04934958659426823,
+        "baseline_recall": 0.0335233811784067
+      },
+      {
+        "group": "gap_since_last_train_rating",
+        "bucket": "<1 month",
+        "n_users": 563,
+        "list_precision": 0.24440497335701603,
+        "baseline_precision": 0.18099467140319717,
+        "diff_ci95_low": 0.050621669626998225,
+        "diff_ci95_high": 0.07602131438721137,
+        "list_recall": 0.03575119654397161,
+        "baseline_recall": 0.024662338862581432
+      },
+      {
+        "group": "gap_since_last_train_rating",
+        "bucket": "1-12 months",
+        "n_users": 1250,
+        "list_precision": 0.20088000000000003,
+        "baseline_precision": 0.14176,
+        "diff_ci95_low": 0.050957999999999996,
+        "diff_ci95_high": 0.067362,
+        "list_recall": 0.05237788746809315,
+        "baseline_recall": 0.03402465015884257
+      },
+      {
+        "group": "gap_since_last_train_rating",
+        "bucket": "1-5 years",
+        "n_users": 993,
+        "list_precision": 0.18600201409869085,
+        "baseline_precision": 0.15901309164149047,
+        "diff_ci95_low": 0.01822759315206445,
+        "diff_ci95_high": 0.036457703927492445,
+        "list_recall": 0.059201636198010686,
+        "baseline_recall": 0.04900031158921691
+      },
+      {
+        "group": "gap_since_last_train_rating",
+        "bucket": "5+ years",
+        "n_users": 147,
+        "list_precision": 0.282312925170068,
+        "baseline_precision": 0.336734693877551,
+        "diff_ci95_low": -0.08845238095238095,
+        "diff_ci95_high": -0.020408163265306128,
+        "list_recall": 0.0705704094856191,
+        "baseline_recall": 0.07200298474019047
+      }
+    ],
+    "by_film_popularity": [
+      {
+        "film_training_ratings": "20-99",
+        "list_n_recs": 1,
+        "list_hits": 1,
+        "list_share_of_recs": 3.3863867253640366e-05,
+        "list_hit_rate": 1.0,
+        "baseline_n_recs": 0,
+        "baseline_hits": 0,
+        "baseline_share_of_recs": 0.0,
+        "baseline_hit_rate": 0.0
+      },
+      {
+        "film_training_ratings": "100-999",
+        "list_n_recs": 7,
+        "list_hits": 3,
+        "list_share_of_recs": 0.00023704707077548256,
+        "list_hit_rate": 0.42857142857142855,
+        "baseline_n_recs": 0,
+        "baseline_hits": 0,
+        "baseline_share_of_recs": 0.0,
+        "baseline_hit_rate": 0.0
+      },
+      {
+        "film_training_ratings": "1k-10k",
+        "list_n_recs": 11344,
+        "list_hits": 2441,
+        "list_share_of_recs": 0.3841517101252963,
+        "list_hit_rate": 0.21517983074753175,
+        "baseline_n_recs": 7838,
+        "baseline_hits": 1541,
+        "baseline_share_of_recs": 0.2654249915340332,
+        "baseline_hit_rate": 0.19660627711150805
+      },
+      {
+        "film_training_ratings": "10k+",
+        "list_n_recs": 18178,
+        "list_hits": 3704,
+        "list_share_of_recs": 0.6155773789366745,
+        "list_hit_rate": 0.20376279018593904,
+        "baseline_n_recs": 21692,
+        "baseline_hits": 3324,
+        "baseline_share_of_recs": 0.7345750084659668,
+        "baseline_hit_rate": 0.15323621611654065
+      }
+    ],
+    "by_genre": [
+      {
+        "genre": "War",
+        "n_recs": 2254,
+        "hit_rate": 0.16326530612244897
+      },
+      {
+        "genre": "Romance",
+        "n_recs": 3026,
+        "hit_rate": 0.19101123595505617
+      },
+      {
+        "genre": "Animation",
+        "n_recs": 3345,
+        "hit_rate": 0.19701046337817638
+      },
+      {
+        "genre": "Drama",
+        "n_recs": 16060,
+        "hit_rate": 0.19744707347447074
+      },
+      {
+        "genre": "Children",
+        "n_recs": 2941,
+        "hit_rate": 0.1985719143148589
+      },
+      {
+        "genre": "Thriller",
+        "n_recs": 9400,
+        "hit_rate": 0.20542553191489363
+      },
+      {
+        "genre": "Crime",
+        "n_recs": 7055,
+        "hit_rate": 0.2066619418851878
+      },
+      {
+        "genre": "Comedy",
+        "n_recs": 6058,
+        "hit_rate": 0.2112908550676791
+      },
+      {
+        "genre": "Mystery",
+        "n_recs": 3177,
+        "hit_rate": 0.21152030217186024
+      },
+      {
+        "genre": "Fantasy",
+        "n_recs": 3860,
+        "hit_rate": 0.21243523316062177
+      },
+      {
+        "genre": "Action",
+        "n_recs": 12139,
+        "hit_rate": 0.21550374824944393
+      },
+      {
+        "genre": "Adventure",
+        "n_recs": 10619,
+        "hit_rate": 0.21951219512195122
+      },
+      {
+        "genre": "Western",
+        "n_recs": 651,
+        "hit_rate": 0.2196620583717358
+      },
+      {
+        "genre": "IMAX",
+        "n_recs": 5597,
+        "hit_rate": 0.2206539217437913
+      },
+      {
+        "genre": "Horror",
+        "n_recs": 674,
+        "hit_rate": 0.22403560830860533
+      },
+      {
+        "genre": "Sci-Fi",
+        "n_recs": 9461,
+        "hit_rate": 0.2376070182855935
+      }
+    ]
+  },
+  "more_like_this_examples": {
+    "Toy Story": [
+      "Toy Story 2 (0.83)",
+      "Bug's Life, A (0.75)",
+      "Monsters, Inc. (0.75)",
+      "Lion King, The (0.74)",
+      "Aladdin (0.73)",
+      "Shrek (0.72)",
+      "Finding Nemo (0.72)",
+      "Back to the Future (0.72)"
+    ],
+    "The Matrix": [
+      "Fight Club (0.87)",
+      "Sixth Sense, The (0.84)",
+      "Gladiator (0.82)",
+      "Memento (0.80)",
+      "Saving Private Ryan (0.79)",
+      "Star Wars: Episode V - The Empire Strikes Back (0.78)",
+      "Lord of the Rings: The Fellowship of the Ring, The (0.77)",
+      "Raiders of the Lost Ark (Indiana Jones and the Raiders of the Lost Ark) (0.77)"
+    ],
+    "Shawshank Redemption": [
+      "Silence of the Lambs, The (0.92)",
+      "Schindler's List (0.90)",
+      "Usual Suspects, The (0.88)",
+      "Pulp Fiction (0.85)",
+      "Forrest Gump (0.85)",
+      "Seven (a.k.a. Se7en) (0.82)",
+      "Braveheart (0.80)",
+      "Apollo 13 (0.76)"
+    ],
+    "Amelie": [
+      "Eternal Sunshine of the Spotless Mind (0.87)",
+      "Memento (0.83)",
+      "Lost in Translation (0.79)",
+      "Run Lola Run (Lola rennt) (0.77)",
+      "Big Fish (0.77)",
+      "Donnie Darko (0.75)",
+      "Pianist, The (0.75)",
+      "Fight Club (0.74)"
+    ],
+    "Spirited Away": [
+      "Princess Mononoke (Mononoke-hime) (0.92)",
+      "My Neighbor Totoro (Tonari no Totoro) (0.92)",
+      "Howl's Moving Castle (Hauru no ugoku shiro) (0.91)",
+      "Laputa: Castle in the Sky (Tenk\u00fb no shiro Rapyuta) (0.86)",
+      "Grave of the Fireflies (Hotaru no haka) (0.86)",
+      "Nausica\u00e4 of the Valley of the Wind (Kaze no tani no Naushika) (0.85)",
+      "Kiki's Delivery Service (Majo no takky\u00fbbin) (0.81)",
+      "Porco Rosso (Crimson Pig) (Kurenai no buta) (0.77)"
+    ],
+    "Fight Club": [
+      "American History X (0.91)",
+      "Memento (0.90)",
+      "Matrix, The (0.87)",
+      "American Beauty (0.85)",
+      "Donnie Darko (0.83)",
+      "Snatch (0.82)",
+      "Eternal Sunshine of the Spotless Mind (0.82)",
+      "Reservoir Dogs (0.79)"
+    ],
+    "The Princess Bride": [
+      "Raiders of the Lost Ark (Indiana Jones and the Raiders of the Lost Ark) (0.83)",
+      "Ferris Bueller's Day Off (0.81)",
+      "Monty Python and the Holy Grail (0.80)",
+      "Groundhog Day (0.78)",
+      "Stand by Me (0.78)",
+      "Indiana Jones and the Last Crusade (0.77)",
+      "Back to the Future (0.77)",
+      "Breakfast Club, The (0.75)"
+    ],
+    "Pirates of the Caribbean": [
+      "Ocean's Eleven (0.86)",
+      "Shrek (0.86)",
+      "Finding Nemo (0.86)",
+      "Spider-Man (0.84)",
+      "Incredibles, The (0.83)",
+      "Monsters, Inc. (0.82)",
+      "Shrek 2 (0.82)",
+      "Catch Me If You Can (0.81)"
+    ]
+  },
+  "lists_example": {
+    "lists": {
+      "completed": [
+        "Matrix, The",
+        "Star Wars: Episode V - The Empire Strikes Back",
+        "Star Wars: Episode IV - A New Hope"
+      ],
+      "plan_to_watch": [
+        "Inception"
+      ],
+      "dropped": [
+        "Titanic"
+      ]
+    },
+    "recommendations": [
+      "Star Wars: Episode VI - Return of the Jedi",
+      "Raiders of the Lost Ark (Indiana Jones and the Raiders of the Lost Ark)",
+      "Dark Knight, The",
+      "Indiana Jones and the Last Crusade",
+      "Lord of the Rings: The Fellowship of the Ring, The",
+      "Lord of the Rings: The Return of the King, The",
+      "Fight Club",
+      "Shawshank Redemption, The",
+      "Lord of the Rings: The Two Towers, The",
+      "Star Wars: Episode VII - The Force Awakens"
+    ]
+  },
+  "reserved_test_untouched": true,
+  "quick_mode": false
+}
