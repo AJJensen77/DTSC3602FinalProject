@@ -54,7 +54,9 @@ and an optional 3.5★ quality floor (same as the baseline's).
 
 Report half, 2,953 users: **precision@10 0.208 vs 0.165** for the popularity baseline
 (95% CI on the difference +0.038 to +0.049), 569 vs 223 distinct films recommended.
-Full comparison, variants, error analysis and limitations: **[`RESULTS.md`](RESULTS.md)**.
+Gradient boost model on the same users: 0.175.
+**Group summary with the three-way comparison: [`MODEL_SUMMARY.md`](MODEL_SUMMARY.md)** ·
+list-model details: [`RESULTS.md`](RESULTS.md).
 
 Note: like `Gradient boost model/`, this folder runs from a checkout of the `D2` branch
 (it uses D2's `data/processed/`, `src/` package and `pyproject.toml`) with

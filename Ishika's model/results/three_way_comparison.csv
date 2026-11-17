@@ -1,0 +1,9 @@
+metric,baseline,gradient_boost,list_model,list_minus_baseline,list_minus_baseline_ci95,list_minus_gradient_boost,list_minus_gradient_boost_ci95,gradient_boost_minus_baseline_ci95
+Precision@10,0.1647477141889604,0.17521164917033524,0.20822891974263463,0.04348120555367423,+0.038 to +0.049 (paired bootstrap),0.03301727057229939,+0.022 to +0.044 (unpaired approx.),"+0.007 to +0.014 (paired, published)"
+Recall@10,0.03916114893331629,0.04283434367567805,0.0524046315044504,0.013243482571134104,+0.011 to +0.016 (paired bootstrap),0.009570287828772346,+0.006 to +0.013 (unpaired approx.),"+0.002 to +0.005 (paired, published)"
+NDCG@10,0.17989097214558067,0.19038664164047545,0.22538743402482514,0.04549646187924447,+0.039 to +0.051 (paired bootstrap),0.035000792384349694,+0.023 to +0.047 (unpaired approx.),"+0.006 to +0.015 (paired, published)"
+Hit rate@10,0.593972231628852,0.6261429055198103,0.7101252963088385,0.11615306467998646,+0.100 to +0.132 (paired bootstrap),0.08398239078902814,+0.059 to +0.109 (unpaired approx.),"+0.018 to +0.046 (paired, published)"
+Liked share of picks the user watched,0.7793737586591096,0.860862893599174,0.8375621544497948,,,,,
+Distinct films recommended,223.0,763.0,569.0,,,,,
+Share of picks from top-1% films,0.628818151032848,0.7016019549280478,0.5085336945479174,,,,,
+Median training ratings of a pick,25961.0,29890.0,13734.0,,,,,
