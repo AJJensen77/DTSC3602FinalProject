@@ -1,6 +1,6 @@
 # List taste model (candidate model #2)
 
-**Author:** Ishika Bhattarai
+**Author:** Ishika Bhattarai · **Live demo:** https://bhattaraiishika--ishika-list-model-demo-run.us-east.modal.run
 
 A personalized recommender driven by a user's **watch lists** — *Completed*, *Currently
 Watching*, *Plan to Watch*, *Dropped* — plus a **"More like this"** lookup for any film.
@@ -67,6 +67,7 @@ Note: like `Gradient boost model/`, this folder runs from a checkout of the `D2`
 | `listmodel/recommender.py` | `ListTasteRecommender` — fit, list encoding, `recommend_from_lists`, `similar_movies` |
 | `evaluate_list_model.py` | Tuning, report-half comparison, variants, error analysis, figures, saves the artifact |
 | `demo.py` | Try lists / "more like this" by hand |
+| `demo_app/` | Live Streamlit demo (`app.py`) and its Modal deployment (`modal_app.py`) |
 | `results/` | JSON + CSV outputs |
 | `figures/` | fig9–fig11 |
 | `artifacts/list_model.joblib` | Fitted model + film metadata incl. `tmdbId` (gitignored; rebuild with the evaluation script) |
@@ -79,6 +80,8 @@ uv run python "Ishika's model/evaluate_list_model.py"           # full run
 uv run python "Ishika's model/evaluate_list_model.py" --quick   # 15k-user sample, ~2 min
 uv run python "Ishika's model/demo.py"
 uv run python "Ishika's model/demo.py" --similar "Spirited Away"
+uv run streamlit run "Ishika's model/demo_app/app.py"           # demo page locally
+uv run modal deploy "Ishika's model/demo_app/modal_app.py"     # redeploy the live demo
 ```
 
 ## For the website (D4/D5)
