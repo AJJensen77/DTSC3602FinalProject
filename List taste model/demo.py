@@ -1,8 +1,8 @@
 """Try the fitted list model by hand (run evaluate_list_model.py first to create the artifact).
 
 Usage (from the repo root):
-    uv run python "Ishika's model/demo.py"
-    uv run python "Ishika's model/demo.py" --similar "Spirited Away"
+    uv run python "List taste model/demo.py"
+    uv run python "List taste model/demo.py" --similar "Spirited Away"
 """
 
 import argparse

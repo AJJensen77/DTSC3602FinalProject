@@ -9,7 +9,7 @@ per-user spreads we can measure. Ignoring the positive pairing makes it wider (m
 conservative) than a paired interval would be.
 
 Usage (from the repo root, after evaluate_list_model.py):
-    uv run python "Ishika's model/compare_models.py"
+    uv run python "List taste model/compare_models.py"
 """
 
 import json

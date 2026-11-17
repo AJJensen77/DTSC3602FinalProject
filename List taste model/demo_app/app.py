@@ -1,9 +1,9 @@
 """Live demo of Ishika's list taste model (Streamlit).
 
 Run locally (from the repo root, after evaluate_list_model.py has saved the artifact):
-    uv run streamlit run "Ishika's model/demo_app/app.py"
+    uv run streamlit run "List taste model/demo_app/app.py"
 Deploy:
-    uv run modal deploy "Ishika's model/demo_app/modal_app.py"
+    uv run modal deploy "List taste model/demo_app/modal_app.py"
 """
 
 import os
@@ -150,5 +150,5 @@ result, then blended with how popular the film was in the last year of training 
 so the list weights for Watching and Plan to Watch are design choices, not tested.
 Trailer links open a YouTube search.
 
-Code and full results: GitHub `AJJensen77/DTSC3602FinalProject`, branch `D3`, folder `Ishika's model/`.
+Code and full results: GitHub `AJJensen77/DTSC3602FinalProject`, branch `D3`, folder `List taste model/`.
 """)

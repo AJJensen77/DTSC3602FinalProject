@@ -1,7 +1,7 @@
 """Deploy the list-model demo (Streamlit) on Modal.
 
 Usage (from the repo root, after evaluate_list_model.py has saved the artifact):
-    uv run modal deploy "Ishika's model/demo_app/modal_app.py"
+    uv run modal deploy "List taste model/demo_app/modal_app.py"
 
 No secrets or database: the fitted model is baked into the image and loaded once
 per container.

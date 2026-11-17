@@ -78,12 +78,12 @@ Note: like `Gradient boost model/`, this folder runs from a checkout of the `D2`
 
 ```bash
 uv run python prepare_data.py                               # D2 prep, if data/processed is empty
-uv run python "Ishika's model/evaluate_list_model.py"           # full run
-uv run python "Ishika's model/evaluate_list_model.py" --quick   # 15k-user sample, ~2 min
-uv run python "Ishika's model/demo.py"
-uv run python "Ishika's model/demo.py" --similar "Spirited Away"
-uv run streamlit run "Ishika's model/demo_app/app.py"           # demo page locally
-uv run modal deploy "Ishika's model/demo_app/modal_app.py"     # redeploy the live demo
+uv run python "List taste model/evaluate_list_model.py"           # full run
+uv run python "List taste model/evaluate_list_model.py" --quick   # 15k-user sample, ~2 min
+uv run python "List taste model/demo.py"
+uv run python "List taste model/demo.py" --similar "Spirited Away"
+uv run streamlit run "List taste model/demo_app/app.py"           # demo page locally
+uv run modal deploy "List taste model/demo_app/modal_app.py"     # redeploy the live demo
 ```
 
 ## For the website (D4/D5)

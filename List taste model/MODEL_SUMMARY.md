@@ -158,7 +158,7 @@ releases.
 
 ## 6. Where things are
 
-Everything lives in `Ishika's model/` on the `D3` branch.
+Everything lives in `List taste model/` on the `D3` branch.
 
 | File | What it is |
 |---|---|
@@ -170,8 +170,8 @@ Everything lives in `Ishika's model/` on the `D3` branch.
 | `results/`, `figures/` | All outputs (fig9–fig13) |
 
 ```bash
-uv run python "Ishika's model/evaluate_list_model.py"   # ~13 min, ~3 GB RAM
-uv run python "Ishika's model/compare_models.py"        # ~1 min
+uv run python "List taste model/evaluate_list_model.py"   # ~13 min, ~3 GB RAM
+uv run python "List taste model/compare_models.py"        # ~1 min
 ```
 
 *AI assistance: built with Claude Code (model code, evaluation, comparison, and drafting this

@@ -13,11 +13,11 @@ Same protocol as every group model (see ``Gradient boost model/baseline/README.m
   from ``evaluate_hybrid.py``, so the numbers are directly comparable.
 
 Usage (from the repo root):
-    uv run python "Ishika's model/evaluate_list_model.py"          # full run, ~10-15 min
-    uv run python "Ishika's model/evaluate_list_model.py" --quick  # 15k-user sample, checks the code
+    uv run python "List taste model/evaluate_list_model.py"          # full run, ~10-15 min
+    uv run python "List taste model/evaluate_list_model.py" --quick  # 15k-user sample, checks the code
 
-Writes ``Ishika's model/results/`` (JSON + CSVs), ``Ishika's model/figures/``, and the fitted
-model to ``Ishika's model/artifacts/list_model.joblib``.
+Writes ``List taste model/results/`` (JSON + CSVs), ``List taste model/figures/``, and the fitted
+model to ``List taste model/artifacts/list_model.joblib``.
 """
 
 import argparse
