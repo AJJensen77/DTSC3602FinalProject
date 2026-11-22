@@ -36,62 +36,25 @@ export function Poster({ movie, compact = false }: { movie: Movie; compact?: boo
 }
 
 const HOVER_DELAY_MS = 700;
-// YouTube flashes its pause icon for about a second as playback starts; stay hidden
-// until the player reports "playing", then wait this long before fading in.
-const REVEAL_AFTER_PLAYING_MS = 1200;
-const REVEAL_FALLBACK_MS = 4000; // in case the player never reports its state
 
 /**
  * Plays a muted trailer over the poster after the mouse rests on it. Only on
  * devices with a real mouse (not phones/tablets) and when the system isn't set to
- * reduce motion. It stops as soon as the mouse leaves.
+ * reduce motion. One preview at a time; it stops as soon as the mouse leaves.
  */
 function useHoverTrailer(movie: Movie) {
   const [trailer, setTrailer] = useState<string | null>(null);
   const [visible, setVisible] = useState(false);
-  const frame = useRef<HTMLIFrameElement>(null);
-  const timers = useRef<ReturnType<typeof setTimeout>[]>([]);
+  const timer = useRef<ReturnType<typeof setTimeout> | null>(null);
   const hovering = useRef(false);
 
-  const clearTimers = () => {
-    timers.current.forEach(clearTimeout);
-    timers.current = [];
-  };
   const stop = () => {
     hovering.current = false;
-    clearTimers();
+    if (timer.current) clearTimeout(timer.current);
     setTrailer(null);
     setVisible(false);
   };
-  // On unmount: stop any pending timers (the iframe goes away with the component).
-  useEffect(() => () => {
-    hovering.current = false;
-    timers.current.forEach(clearTimeout);
-  }, []);
-
-  // Listen for the YouTube player's state messages (IFrame API via postMessage).
-  useEffect(() => {
-    if (!trailer) return;
-    let revealed = false;
-    const reveal = (ms: number) => {
-      if (revealed) return;
-      revealed = true;
-      timers.current.push(setTimeout(() => hovering.current && setVisible(true), ms));
-    };
-    const onMessage = (e: MessageEvent) => {
-      if (e.source !== frame.current?.contentWindow || typeof e.data !== "string") return;
-      try {
-        const msg = JSON.parse(e.data);
-        if (msg.event === "infoDelivery" && msg.info?.playerState === 1) reveal(REVEAL_AFTER_PLAYING_MS);
-        if (msg.event === "onStateChange" && msg.info === 1) reveal(REVEAL_AFTER_PLAYING_MS);
-      } catch {
-        // not a YouTube message
-      }
-    };
-    window.addEventListener("message", onMessage);
-    timers.current.push(setTimeout(() => reveal(0), REVEAL_FALLBACK_MS));
-    return () => window.removeEventListener("message", onMessage);
-  }, [trailer]);
+  useEffect(() => stop, []);
 
   const start = (e: React.PointerEvent) => {
     if (e.pointerType !== "mouse") return;
@@ -100,27 +63,23 @@ function useHoverTrailer(movie: Movie) {
     const key = posterKey(movie);
     if (!key) return;
     hovering.current = true;
-    timers.current.push(setTimeout(async () => {
+    timer.current = setTimeout(async () => {
       const details = await fetchDetails(key);
       if (hovering.current && details?.trailer) setTrailer(details.trailer);
-    }, HOVER_DELAY_MS));
+    }, HOVER_DELAY_MS);
   };
 
-  /** Ask the player to start sending state updates once it has loaded. */
-  const onLoad = () =>
-    frame.current?.contentWindow?.postMessage(JSON.stringify({ event: "listening", id: 1, channel: "widget" }), "*");
-
-  return { trailer, visible, frame, onLoad, handlers: { onPointerEnter: start, onPointerLeave: stop } };
+  return { trailer, visible, onLoad: () => setVisible(true), handlers: { onPointerEnter: start, onPointerLeave: stop } };
 }
 
 export function MovieCard({ movie, children }: { movie: Movie; children?: React.ReactNode }) {
-  const { trailer, visible, frame, onLoad, handlers } = useHoverTrailer(movie);
+  const hover = useHoverTrailer(movie);
   return (
     <div className="flex h-full flex-col overflow-hidden rounded-xl border bg-card">
       <Link href={`/movie/${movie.movie_id}`} className="group/card relative block overflow-hidden focus-visible:outline-2 focus-visible:outline-ring"
-            aria-label={`${movie.title}: details and more like this`} {...handlers}>
+            aria-label={`${movie.title}: details and more like this`} {...hover.handlers}>
         <Poster movie={movie} />
-        {trailer && (
+        {hover.trailer && (
           // A 16:9 trailer filling a 2:3 poster, zoomed 1.35x so YouTube's title bar
           // (top) and "More videos" panel (bottom) fall outside the poster: 135% tall,
           // 2.67 x 1.35 = 360% wide, centred both ways.
@@ -128,13 +87,12 @@ export function MovieCard({ movie, children }: { movie: Movie; children?: React.
             aria-hidden
             tabIndex={-1}
             title={`${movie.title} trailer preview`}
-            ref={frame}
-            src={`https://www.youtube-nocookie.com/embed/${trailer}?enablejsapi=1&autoplay=1&mute=1&controls=0&playsinline=1&loop=1&playlist=${trailer}&rel=0&modestbranding=1&iv_load_policy=3&disablekb=1`}
+            src={`https://www.youtube-nocookie.com/embed/${hover.trailer}?autoplay=1&mute=1&controls=0&playsinline=1&loop=1&playlist=${hover.trailer}&rel=0&modestbranding=1&iv_load_policy=3&disablekb=1`}
             allow="autoplay; encrypted-media"
-            onLoad={onLoad}
+            onLoad={hover.onLoad}
             className={cn(
               "pointer-events-none absolute left-1/2 top-1/2 h-[135%] w-[360%] max-w-none -translate-x-1/2 -translate-y-1/2 border-0 transition-opacity duration-500",
-              visible ? "opacity-100" : "opacity-0",
+              hover.visible ? "opacity-100" : "opacity-0",
             )}
           />
         )}
