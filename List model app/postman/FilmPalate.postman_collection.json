@@ -1,0 +1,519 @@
+{
+  "info": {
+    "name": "FilmPalate API (D4/D5)",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": "Assertions against the deployed FilmPalate API: health, pipeline info, valid requests, cold start, and invalid input."
+  },
+  "variable": [
+    {
+      "key": "base_url",
+      "value": "https://yagerr05--filmpalate-api-fastapi-app.us-east.modal.run"
+    }
+  ],
+  "item": [
+    {
+      "name": "Health",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{base_url}}/health",
+          "host": [
+            "{{base_url}}"
+          ],
+          "path": [
+            "health"
+          ]
+        }
+      },
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test(\"status is 200\", () => pm.response.to.have.status(200));",
+              "pm.test(\"model loaded\", () => pm.expect(pm.response.json().status).to.eql(\"ok\"));",
+              "pm.test(\"pipeline has encode and rank\", () => pm.expect(pm.response.json().pipeline_steps).to.eql([\"encode\", \"rank\"]));"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "Pipeline info",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{base_url}}/pipeline",
+          "host": [
+            "{{base_url}}"
+          ],
+          "path": [
+            "pipeline"
+          ]
+        }
+      },
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test(\"status is 200\", () => pm.response.to.have.status(200));",
+              "const j = pm.response.json();",
+              "pm.test(\"steps are encode -> rank\", () => pm.expect(j.steps).to.eql([\"encode\", \"rank\"]));",
+              "pm.test(\"site popularity weight is 2\", () => pm.expect(j.list_model_settings.popularity_weight).to.eql(2));",
+              "pm.test(\"lists described\", () => pm.expect(j.lists).to.have.keys(\"my_ratings\", \"want_to_watch\"));"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "Recommend - ratings + want to watch",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "url": {
+          "raw": "{{base_url}}/recommend",
+          "host": [
+            "{{base_url}}"
+          ],
+          "path": [
+            "recommend"
+          ]
+        },
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"ratings\": [\n    {\n      \"movie_id\": 2571,\n      \"stars\": 5\n    },\n    {\n      \"movie_id\": 1196,\n      \"stars\": 4.5\n    },\n    {\n      \"movie_id\": 260,\n      \"stars\": 5\n    },\n    {\n      \"movie_id\": 1721,\n      \"stars\": 1.5\n    }\n  ],\n  \"want_to_watch\": [\n    79132\n  ],\n  \"k\": 10\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        }
+      },
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test(\"status is 200\", () => pm.response.to.have.status(200));",
+              "const j = pm.response.json();",
+              "pm.test(\"personalized\", () => pm.expect(j.personalized).to.be.true);",
+              "pm.test(\"10 recommendations\", () => pm.expect(j.recommendations).to.have.lengthOf(10));",
+              "pm.test(\"10 new releases\", () => pm.expect(j.new_releases).to.have.lengthOf(10));",
+              "const listed = [2571, 1196, 260, 1721, 79132];",
+              "pm.test(\"never recommends a listed film\", () => j.recommendations.concat(j.new_releases).forEach(m => pm.expect(listed).to.not.include(m.movie_id)));",
+              "pm.test(\"matches local pipeline: Return of the Jedi first\", () => pm.expect(j.recommendations[0].movie_id).to.eql(1210));"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "Recommend - empty lists (cold start)",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "url": {
+          "raw": "{{base_url}}/recommend",
+          "host": [
+            "{{base_url}}"
+          ],
+          "path": [
+            "recommend"
+          ]
+        },
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"ratings\": [],\n  \"want_to_watch\": []\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        }
+      },
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test(\"status is 200\", () => pm.response.to.have.status(200));",
+              "const j = pm.response.json();",
+              "pm.test(\"popular picks, not personal\", () => pm.expect(j.personalized).to.be.false);",
+              "pm.test(\"still returns picks\", () => pm.expect(j.recommendations.length).to.be.above(0));"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "Recommend rows",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "url": {
+          "raw": "{{base_url}}/recommend/rows",
+          "host": [
+            "{{base_url}}"
+          ],
+          "path": [
+            "recommend",
+            "rows"
+          ]
+        },
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"ratings\": [\n    {\n      \"movie_id\": 2571,\n      \"stars\": 5\n    }\n  ],\n  \"want_to_watch\": [\n    79132\n  ],\n  \"rotate\": 0\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        }
+      },
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test(\"status is 200\", () => pm.response.to.have.status(200));",
+              "const keys = pm.response.json().rows.map(r => r.key);",
+              "pm.test(\"has top and new rows\", () => pm.expect(keys).to.include.members([\"top\", \"new\"]));",
+              "pm.test(\"has a Because you liked row\", () => pm.expect(keys.some(k => k.startsWith(\"because-\"))).to.be.true);"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "More like this",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{base_url}}/movies/2571/similar?k=5",
+          "host": [
+            "{{base_url}}"
+          ],
+          "path": [
+            "movies",
+            "2571",
+            "similar"
+          ],
+          "query": [
+            {
+              "key": "k",
+              "value": "5"
+            }
+          ]
+        }
+      },
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test(\"status is 200\", () => pm.response.to.have.status(200));",
+              "pm.test(\"5 similar films\", () => pm.expect(pm.response.json()).to.have.lengthOf(5));",
+              "pm.test(\"excludes the film itself\", () => pm.response.json().forEach(m => pm.expect(m.movie_id).to.not.eql(2571)));"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "Search",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{base_url}}/movies/search?q=dune",
+          "host": [
+            "{{base_url}}"
+          ],
+          "path": [
+            "movies",
+            "search"
+          ],
+          "query": [
+            {
+              "key": "q",
+              "value": "dune"
+            }
+          ]
+        }
+      },
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test(\"status is 200\", () => pm.response.to.have.status(200));",
+              "pm.test(\"finds Dune: Part Two (2024, IMDb-only)\", () => pm.expect(pm.response.json().some(m => m.title === \"Dune: Part Two\" && m.is_new)).to.be.true);"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "Invalid - stars not in half steps (422)",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "url": {
+          "raw": "{{base_url}}/recommend",
+          "host": [
+            "{{base_url}}"
+          ],
+          "path": [
+            "recommend"
+          ]
+        },
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"ratings\": [\n    {\n      \"movie_id\": 2571,\n      \"stars\": 4.3\n    }\n  ]\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        }
+      },
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test(\"status is 422\", () => pm.response.to.have.status(422));",
+              "pm.test(\"explains half-star steps\", () => pm.expect(JSON.stringify(pm.response.json().detail)).to.include(\"half-star\"));"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "Invalid - stars above 5 (422)",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "url": {
+          "raw": "{{base_url}}/recommend",
+          "host": [
+            "{{base_url}}"
+          ],
+          "path": [
+            "recommend"
+          ]
+        },
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"ratings\": [\n    {\n      \"movie_id\": 2571,\n      \"stars\": 7\n    }\n  ]\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        }
+      },
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test(\"status is 422\", () => pm.response.to.have.status(422));"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "Invalid - unknown movie id (422)",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "url": {
+          "raw": "{{base_url}}/recommend",
+          "host": [
+            "{{base_url}}"
+          ],
+          "path": [
+            "recommend"
+          ]
+        },
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"ratings\": [\n    {\n      \"movie_id\": 123456789,\n      \"stars\": 4\n    }\n  ]\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        }
+      },
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test(\"status is 422\", () => pm.response.to.have.status(422));",
+              "pm.test(\"names the unknown id\", () => pm.expect(pm.response.json().detail).to.include(\"123456789\"));"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "Invalid - same movie rated twice (422)",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "url": {
+          "raw": "{{base_url}}/recommend",
+          "host": [
+            "{{base_url}}"
+          ],
+          "path": [
+            "recommend"
+          ]
+        },
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"ratings\": [\n    {\n      \"movie_id\": 1,\n      \"stars\": 4\n    },\n    {\n      \"movie_id\": 1,\n      \"stars\": 3\n    }\n  ]\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        }
+      },
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test(\"status is 422\", () => pm.response.to.have.status(422));"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "Invalid - k out of range (422)",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "url": {
+          "raw": "{{base_url}}/recommend",
+          "host": [
+            "{{base_url}}"
+          ],
+          "path": [
+            "recommend"
+          ]
+        },
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"k\": 0\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        }
+      },
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test(\"status is 422\", () => pm.response.to.have.status(422));"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "Not found - unknown movie (404)",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{base_url}}/movies/999999999",
+          "host": [
+            "{{base_url}}"
+          ],
+          "path": [
+            "movies",
+            "999999999"
+          ]
+        }
+      },
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test(\"status is 404\", () => pm.response.to.have.status(404));"
+            ]
+          }
+        }
+      ]
+    }
+  ]
+}

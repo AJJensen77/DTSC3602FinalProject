@@ -3,8 +3,9 @@
 **Model:** Ishika Bhattarai's List taste model (`../List taste model/`), the model the
 group chose in D3. **Pipeline, API and website:** Yager Range.
 
-- Website: _(Vercel URL, added after deployment)_
-- API: _(Modal URL, added after deployment)_ · docs at `/docs`
+- Website: https://filmpalate.vercel.app
+- API: https://yagerr05--filmpalate-api-fastapi-app.us-east.modal.run · docs at
+  https://yagerr05--filmpalate-api-fastapi-app.us-east.modal.run/docs
 
 ## What the site does
 
@@ -87,8 +88,16 @@ Website environment (`web/.env.local`, never committed): `NEXT_PUBLIC_MOVIE_API_
 `NEXT_PUBLIC_SUPABASE_URL`, `NEXT_PUBLIC_SUPABASE_ANON_KEY`, `TMDB_API_KEY`. The Supabase
 table and its row-level security are in `web/supabase/schema.sql`.
 
-`api/artifacts/sample_predictions.json` holds reference outputs for three requests, used to
-check that local and deployed outputs match.
+`api/artifacts/sample_predictions.json` holds reference outputs for three requests.
+`uv run python "List model app/verify_deployment.py"` sends them to the deployed API and
+checks the outputs match exactly (plus health, pipeline info, 422 and 404 responses).
+
+## Postman
+
+`postman/FilmPalate.postman_collection.json`: 13 requests, 32 assertions against the
+deployed API (health, pipeline info, valid recommendations, empty lists, invalid input
+-> 422, unknown movie -> 404). Import it into Postman and click **Run collection**, or run
+`npx newman run "List model app/postman/FilmPalate.postman_collection.json"`.
 
 ## API
 
