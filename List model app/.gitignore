@@ -1,0 +1,8 @@
+# Rebuild with: uv run python "List model app/build_model.py"
+api/artifacts/*.joblib
+api/artifacts/*.parquet
+web/node_modules/
+web/.next/
+web/.env*.local
+web/.vercel/
+__pycache__/

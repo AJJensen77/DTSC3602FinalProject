@@ -1,0 +1,110 @@
+{
+  "held_out_years": [
+    2015,
+    2016
+  ],
+  "n_held_out_films": 775,
+  "grid": [
+    {
+      "taste_weight": 0.0,
+      "rating_weight": 0.0,
+      "tune_p10": 0.17840148698884759
+    },
+    {
+      "taste_weight": 0.0,
+      "rating_weight": 0.25,
+      "tune_p10": 0.19698884758364316
+    },
+    {
+      "taste_weight": 0.0,
+      "rating_weight": 0.5,
+      "tune_p10": 0.18955390334572492
+    },
+    {
+      "taste_weight": 0.0,
+      "rating_weight": 1.0,
+      "tune_p10": 0.1771747211895911
+    },
+    {
+      "taste_weight": 0.25,
+      "rating_weight": 0.0,
+      "tune_p10": 0.1728252788104089
+    },
+    {
+      "taste_weight": 0.25,
+      "rating_weight": 0.25,
+      "tune_p10": 0.19438661710037178
+    },
+    {
+      "taste_weight": 0.25,
+      "rating_weight": 0.5,
+      "tune_p10": 0.19405204460966544
+    },
+    {
+      "taste_weight": 0.25,
+      "rating_weight": 1.0,
+      "tune_p10": 0.17776951672862457
+    },
+    {
+      "taste_weight": 0.5,
+      "rating_weight": 0.0,
+      "tune_p10": 0.15959107806691453
+    },
+    {
+      "taste_weight": 0.5,
+      "rating_weight": 0.25,
+      "tune_p10": 0.1821189591078067
+    },
+    {
+      "taste_weight": 0.5,
+      "rating_weight": 0.5,
+      "tune_p10": 0.1853903345724907
+    },
+    {
+      "taste_weight": 0.5,
+      "rating_weight": 1.0,
+      "tune_p10": 0.17639405204460967
+    },
+    {
+      "taste_weight": 1.0,
+      "rating_weight": 0.0,
+      "tune_p10": 0.13572490706319704
+    },
+    {
+      "taste_weight": 1.0,
+      "rating_weight": 0.25,
+      "tune_p10": 0.15431226765799255
+    },
+    {
+      "taste_weight": 1.0,
+      "rating_weight": 0.5,
+      "tune_p10": 0.16371747211895912
+    },
+    {
+      "taste_weight": 1.0,
+      "rating_weight": 1.0,
+      "tune_p10": 0.16799256505576207
+    }
+  ],
+  "selected": {
+    "new_taste_weight": 0.0,
+    "new_rating_weight": 0.25
+  },
+  "report": {
+    "n_users": 2665,
+    "chosen_p10": 0.18818011257035647,
+    "most_voted_p10": 0.16986866791744842,
+    "difference": {
+      "diff": 0.018311444652908068,
+      "ci95_low": 0.016172607879924954,
+      "ci95_high": 0.020562851782363976,
+      "n_users": 2665
+    },
+    "within_user_auc": {
+      "taste_only": 0.5148656660644421,
+      "imdb_rating_only": 0.6747149253112884,
+      "buzz_only": 0.5586524110917146,
+      "chosen": 0.5855412057253014
+    }
+  }
+}
