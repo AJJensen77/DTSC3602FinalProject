@@ -28,6 +28,39 @@ export type ListsBody = {
   want_to_watch: number[];
 };
 
+/** Extra film info from TMDB, served by this site's own /api/details route. */
+export type MovieDetails = {
+  tmdb_id: number;
+  overview: string | null;
+  tagline: string | null;
+  runtime: number | null;
+  release_date: string | null;
+  certification: string | null;
+  backdrop: string | null;
+  directors: string[];
+  writers: string[];
+  cast: { name: string; character: string; photo: string | null }[];
+  trailer: string | null;
+};
+
+const detailsCache = new Map<string, Promise<MovieDetails | null>>();
+
+/** TMDB details by TMDB id or IMDb id; null when TMDB has nothing. Cached per page load. */
+export function fetchDetails(key: string): Promise<MovieDetails | null> {
+  if (!detailsCache.has(key)) {
+    detailsCache.set(
+      key,
+      fetch(`/api/details/${key}`)
+        .then((r) => (r.ok ? (r.json() as Promise<MovieDetails>) : null))
+        .catch(() => {
+          detailsCache.delete(key); // let a later attempt retry after a network error
+          return null;
+        }),
+    );
+  }
+  return detailsCache.get(key)!;
+}
+
 export class ApiError extends Error {
   constructor(message: string, public status: number) {
     super(message);

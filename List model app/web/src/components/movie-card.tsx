@@ -2,9 +2,9 @@
 
 import { ChevronLeft, ChevronRight, Film } from "lucide-react";
 import Link from "next/link";
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 
-import type { Movie } from "@/lib/api";
+import { fetchDetails, type Movie } from "@/lib/api";
 import { cn } from "@/lib/utils";
 
 /** TMDB id when MovieLens links one; otherwise the IMDb id (newer films). */
@@ -35,12 +35,67 @@ export function Poster({ movie, compact = false }: { movie: Movie; compact?: boo
   );
 }
 
+const HOVER_DELAY_MS = 700;
+
+/**
+ * Plays a muted trailer over the poster after the mouse rests on it. Only on
+ * devices with a real mouse (not phones/tablets) and when the system isn't set to
+ * reduce motion. One preview at a time; it stops as soon as the mouse leaves.
+ */
+function useHoverTrailer(movie: Movie) {
+  const [trailer, setTrailer] = useState<string | null>(null);
+  const [visible, setVisible] = useState(false);
+  const timer = useRef<ReturnType<typeof setTimeout> | null>(null);
+  const hovering = useRef(false);
+
+  const stop = () => {
+    hovering.current = false;
+    if (timer.current) clearTimeout(timer.current);
+    setTrailer(null);
+    setVisible(false);
+  };
+  useEffect(() => stop, []);
+
+  const start = (e: React.PointerEvent) => {
+    if (e.pointerType !== "mouse") return;
+    if (!window.matchMedia("(hover: hover) and (pointer: fine)").matches) return;
+    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+    const key = posterKey(movie);
+    if (!key) return;
+    hovering.current = true;
+    timer.current = setTimeout(async () => {
+      const details = await fetchDetails(key);
+      if (hovering.current && details?.trailer) setTrailer(details.trailer);
+    }, HOVER_DELAY_MS);
+  };
+
+  return { trailer, visible, onLoad: () => setVisible(true), handlers: { onPointerEnter: start, onPointerLeave: stop } };
+}
+
 export function MovieCard({ movie, children }: { movie: Movie; children?: React.ReactNode }) {
+  const hover = useHoverTrailer(movie);
   return (
     <div className="flex h-full flex-col overflow-hidden rounded-xl border bg-card">
-      <Link href={`/movie/${movie.movie_id}`} className="group/card relative block focus-visible:outline-2 focus-visible:outline-ring"
-            aria-label={`${movie.title}: details and more like this`}>
+      <Link href={`/movie/${movie.movie_id}`} className="group/card relative block overflow-hidden focus-visible:outline-2 focus-visible:outline-ring"
+            aria-label={`${movie.title}: details and more like this`} {...hover.handlers}>
         <Poster movie={movie} />
+        {hover.trailer && (
+          // A 16:9 trailer filling a 2:3 poster, zoomed 1.35x so YouTube's title bar
+          // (top) and "More videos" panel (bottom) fall outside the poster: 135% tall,
+          // 2.67 x 1.35 = 360% wide, centred both ways.
+          <iframe
+            aria-hidden
+            tabIndex={-1}
+            title={`${movie.title} trailer preview`}
+            src={`https://www.youtube-nocookie.com/embed/${hover.trailer}?autoplay=1&mute=1&controls=0&playsinline=1&loop=1&playlist=${hover.trailer}&rel=0&modestbranding=1&iv_load_policy=3&disablekb=1`}
+            allow="autoplay; encrypted-media"
+            onLoad={hover.onLoad}
+            className={cn(
+              "pointer-events-none absolute left-1/2 top-1/2 h-[135%] w-[360%] max-w-none -translate-x-1/2 -translate-y-1/2 border-0 transition-opacity duration-500",
+              hover.visible ? "opacity-100" : "opacity-0",
+            )}
+          />
+        )}
         {movie.is_new && (
           <span className="absolute left-2 top-2 rounded-md bg-primary px-1.5 py-0.5 text-xs font-semibold text-primary-foreground shadow">
             New
