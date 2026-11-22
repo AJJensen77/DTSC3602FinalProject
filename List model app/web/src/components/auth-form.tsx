@@ -64,7 +64,14 @@ export function AuthForm({ mode }: { mode: "login" | "signup" }) {
                    onChange={(e) => setEmail(e.target.value)} />
           </div>
           <div className="flex flex-col gap-2">
-            <Label htmlFor="password">Password</Label>
+            <div className="flex items-center justify-between">
+              <Label htmlFor="password">Password</Label>
+              {!signup && (
+                <Link href="/forgot-password" className="text-xs text-muted-foreground underline-offset-2 hover:text-foreground hover:underline">
+                  Forgot password?
+                </Link>
+              )}
+            </div>
             <Input id="password" type="password" required
                    autoComplete={signup ? "new-password" : "current-password"}
                    value={password} onChange={(e) => setPassword(e.target.value)} />
