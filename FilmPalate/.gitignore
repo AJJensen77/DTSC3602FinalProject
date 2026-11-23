@@ -1,4 +1,4 @@
-# Rebuild with: uv run python "List model app/build_model.py"
+# Rebuild with: uv run python "FilmPalate/build_model.py"
 api/artifacts/*.joblib
 api/artifacts/*.parquet
 web/node_modules/

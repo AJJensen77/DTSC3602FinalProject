@@ -7,7 +7,7 @@ script scores both on the *report* half with the group's protocol and metric cod
 bootstrap CIs against the popularity baseline and against weight 6.
 
 Usage (repo root, ~5 min):
-    uv run python "List model app/evaluate_popularity_weight.py"
+    uv run python "FilmPalate/evaluate_popularity_weight.py"
 """
 
 import json

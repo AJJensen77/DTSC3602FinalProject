@@ -11,12 +11,12 @@
   settings chosen in ``evaluate_new_films.py``.
 
 Writes (gitignored, rebuild with this script, ~10 min):
-    List model app/api/artifacts/watchlist_pipeline.joblib
-    List model app/api/artifacts/catalog.parquet
-    List model app/api/artifacts/sample_predictions.json   (for local vs deployed checks)
+    FilmPalate/api/artifacts/watchlist_pipeline.joblib
+    FilmPalate/api/artifacts/catalog.parquet
+    FilmPalate/api/artifacts/sample_predictions.json   (for local vs deployed checks)
 
 Usage (repo root):
-    uv run python "List model app/build_model.py"
+    uv run python "FilmPalate/build_model.py"
 """
 
 import json

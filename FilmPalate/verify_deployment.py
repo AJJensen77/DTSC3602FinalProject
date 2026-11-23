@@ -6,7 +6,7 @@ deployed API (``POST /recommend``) and compares film ids and order, then checks 
 health, pipeline-info and error responses.
 
 Usage (repo root):
-    uv run python "List model app/verify_deployment.py" [API_URL]
+    uv run python "FilmPalate/verify_deployment.py" [API_URL]
 """
 
 import json

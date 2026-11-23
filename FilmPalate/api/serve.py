@@ -10,7 +10,7 @@ website's home page: top picks, new releases, "because you liked / want to watch
 rows and genre rows. Both work with empty lists (popular, well-liked films).
 
 Local dev (from the repo root):
-    uv run uvicorn --app-dir "List model app" api.serve:app --reload
+    uv run uvicorn --app-dir "FilmPalate" api.serve:app --reload
     -> http://localhost:8000/docs
 """
 

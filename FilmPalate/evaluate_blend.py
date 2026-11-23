@@ -11,7 +11,7 @@ the best weight on the tune half and reports it on the report half against
 popular picks (group protocol; both skip films the user rated in training).
 
 Usage (repo root, ~10 min):
-    uv run python "List model app/evaluate_blend.py"
+    uv run python "FilmPalate/evaluate_blend.py"
 """
 
 import json

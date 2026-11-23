@@ -1,8 +1,8 @@
 """Modal deployment of the FilmPalate API.
 
 Usage (from the repo root, after build_model.py has written api/artifacts/):
-    uv run modal serve  "List model app/api/modal_serve.py"   # temporary dev URL
-    uv run modal deploy "List model app/api/modal_serve.py"   # public URL
+    uv run modal serve  "FilmPalate/api/modal_serve.py"   # temporary dev URL
+    uv run modal deploy "FilmPalate/api/modal_serve.py"   # public URL
 """
 
 from pathlib import Path

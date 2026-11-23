@@ -19,7 +19,7 @@ reported on the report half, the group's protocol. Also reported: within-user AU
 i.e. how often a liked film outscores a rated-but-not-liked one (0.5 = chance).
 
 Usage (repo root, ~2 min):
-    uv run python "List model app/evaluate_new_films.py"
+    uv run python "FilmPalate/evaluate_new_films.py"
 """
 
 import json

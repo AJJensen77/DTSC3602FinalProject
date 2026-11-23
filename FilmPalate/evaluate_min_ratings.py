@@ -10,7 +10,7 @@ As on the site, a user whose N ratings are all <= 2 stars (nothing positive) get
 the popular picks. Want to Watch cannot be tested: MovieLens has no such data.
 
 Usage (repo root, ~5 min):
-    uv run python "List model app/evaluate_min_ratings.py"
+    uv run python "FilmPalate/evaluate_min_ratings.py"
 """
 
 import json

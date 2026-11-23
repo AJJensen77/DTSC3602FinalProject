@@ -75,11 +75,11 @@ Data: as in D2 (`data/processed/` from `prepare_data.py`, MovieLens ml-32m in
 
 ```bash
 uv sync
-uv run python "List model app/build_model.py"          # ~10 min -> api/artifacts/ (gitignored)
-uv run uvicorn --app-dir "List model app" api.serve:app --port 8000   # http://localhost:8000/docs
-uv run modal deploy "List model app/api/modal_serve.py"               # Modal app "filmpalate-api"
+uv run python "FilmPalate/build_model.py"          # ~10 min -> api/artifacts/ (gitignored)
+uv run uvicorn --app-dir "FilmPalate" api.serve:app --port 8000   # http://localhost:8000/docs
+uv run modal deploy "FilmPalate/api/modal_serve.py"               # Modal app "filmpalate-api"
 
-cd "List model app/web"
+cd "FilmPalate/web"
 npm ci
 npm run dev                                             # http://localhost:3000
 ```
@@ -89,7 +89,7 @@ Website environment (`web/.env.local`, never committed): `NEXT_PUBLIC_MOVIE_API_
 table and its row-level security are in `web/supabase/schema.sql`.
 
 `api/artifacts/sample_predictions.json` holds reference outputs for three requests.
-`uv run python "List model app/verify_deployment.py"` sends them to the deployed API and
+`uv run python "FilmPalate/verify_deployment.py"` sends them to the deployed API and
 checks the outputs match exactly (plus health, pipeline info, 422 and 404 responses).
 
 ## Postman
@@ -97,7 +97,7 @@ checks the outputs match exactly (plus health, pipeline info, 422 and 404 respon
 `postman/FilmPalate.postman_collection.json`: 13 requests, 32 assertions against the
 deployed API (health, pipeline info, valid recommendations, empty lists, invalid input
 -> 422, unknown movie -> 404). Import it into Postman and click **Run collection**, or run
-`npx newman run "List model app/postman/FilmPalate.postman_collection.json"`.
+`npx newman run "FilmPalate/postman/FilmPalate.postman_collection.json"`.
 
 ## API
 
