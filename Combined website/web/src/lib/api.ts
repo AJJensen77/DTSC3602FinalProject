@@ -16,6 +16,7 @@ export type MovieDetail = Movie & {
   imdb_votes: number | null;
   movielens_ratings: number;
   has_similar: boolean;
+  is_new: boolean;
 };
 
 export type Recommendation = Movie & {
@@ -25,6 +26,8 @@ export type Recommendation = Movie & {
 
 export type RecommendResponse = {
   recommendations: Recommendation[];
+  /** Films released 2017 to today, ranked separately (see Combined website/combined/site.py). */
+  new_releases: Recommendation[];
   n_ratings_used: number;
   n_list_items_used: number;
   used_gradient_boost: boolean;
@@ -83,7 +86,7 @@ export const api = {
     ids.length ? call<Movie[]>(`/movies/lookup?ids=${ids.join(",")}`) : Promise.resolve([]),
   movie: (id: number) => call<MovieDetail>(`/movies/${id}`),
   similar: (id: number, k = 12) => call<Movie[]>(`/movies/${id}/similar?k=${k}`),
-  recommend: (ratings: Map<number, number>, lists: Map<number, ListName>, genres: string[], k = 20) =>
+  recommend: (ratings: Map<number, number>, lists: Map<number, ListName>, genres: string[], k = 20, kNew = 12) =>
     call<RecommendResponse>("/recommend", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
@@ -93,6 +96,7 @@ export const api = {
         plan_to_watch: [...lists].filter(([, l]) => l === "plan_to_watch").map(([id]) => id),
         genres,
         k,
+        k_new: kNew,
       }),
     }),
 };

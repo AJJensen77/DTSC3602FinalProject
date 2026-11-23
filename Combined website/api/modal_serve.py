@@ -33,12 +33,13 @@ image = (
     .add_local_dir(SITE / "combined", "/root/combined")
     .add_local_dir(ROOT / "List taste model" / "listmodel", "/root/listmodel")
     .add_local_dir(ROOT / "Gradient boost model" / "gbmodel", "/root/gbmodel")
+    .add_local_dir(ROOT / "FilmPalate" / "D4_submission" / "watchlist", "/root/watchlist")
     .add_local_file(HERE / "serve.py", "/root/api/serve.py")
     .add_local_dir(HERE / "artifacts", "/root/api/artifacts")
 )
 
 
-@app.function(image=image, min_containers=0, memory=4096, scaledown_window=600)
+@app.function(image=image, min_containers=0, memory=6144, scaledown_window=600)
 @modal.concurrent(max_inputs=20)
 @modal.asgi_app()
 def fastapi_app():

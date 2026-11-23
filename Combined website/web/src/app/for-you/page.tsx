@@ -112,6 +112,22 @@ export default function ForYouPage() {
                 <LibraryCard key={m.movie_id} movie={m} />
               ))}
             </MovieGrid>
+            {data.new_releases.length > 0 && (
+              <section id="new" className="flex scroll-mt-20 flex-col gap-3 pt-6">
+                <div>
+                  <h2 className="text-lg font-semibold">New releases for you (2017 to today)</h2>
+                  <p className="text-sm text-muted-foreground">
+                    Newer movies our ratings data doesn&apos;t cover yet, ranked by how much people are watching
+                    them, their IMDb rating, and how close they are to the movies on your list.
+                  </p>
+                </div>
+                <MovieGrid>
+                  {data.new_releases.map((m) => (
+                    <LibraryCard key={m.movie_id} movie={m} />
+                  ))}
+                </MovieGrid>
+              </section>
+            )}
           </>
         )
       )}

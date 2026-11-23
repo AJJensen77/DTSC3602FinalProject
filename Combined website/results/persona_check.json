@@ -4,7 +4,9 @@
     "max_overlap_between_personas_top10": 0.1,
     "personas_where_genre_share_beats_empty_user": 8,
     "personas_with_seed_films_recommended_back": 0,
-    "plan_to_watch_only_horror_share": 1.0
+    "plan_to_watch_only_horror_share": 1.0,
+    "mean_new_release_genre_share": 0.41250000000000003,
+    "mean_new_release_genre_share_empty_user": 0.05
   },
   "personas": {
     "horror fan": {
@@ -64,7 +66,20 @@
       "genre_share_of_catalog": 0.10970533464782561,
       "list_only_genre_share": 1.0,
       "hated_genre_share": 0.0,
-      "seed_films_recommended_back": []
+      "seed_films_recommended_back": [],
+      "new_release_picks": [
+        "Scream",
+        "Scream 7",
+        "Send Help",
+        "Obsession",
+        "The Gorge",
+        "Avatar: The Way of Water",
+        "28 Years Later: The Bone Temple",
+        "28 Years Later",
+        "Terminator: Dark Fate",
+        "Avatar: Fire and Ash"
+      ],
+      "new_release_genre_share": 0.7
     },
     "animation / family": {
       "genre": "Animation",
@@ -123,7 +138,20 @@
       "genre_share_of_catalog": 0.054003724394785846,
       "list_only_genre_share": 1.0,
       "hated_genre_share": 0.0,
-      "seed_films_recommended_back": []
+      "seed_films_recommended_back": [],
+      "new_release_picks": [
+        "Wallace & Gromit: Vengeance Most Fowl",
+        "Toy Story 5",
+        "The Bad Guys",
+        "Connected",
+        "A Shaun the Sheep Movie: Farmageddon",
+        "Strange World",
+        "Ron's Gone Wrong",
+        "Apollo 10\u00bd:  A Space Age Childhood",
+        "Soul",
+        "Spider-Man: Across the Spider-Verse"
+      ],
+      "new_release_genre_share": 1.0
     },
     "documentary watcher": {
       "genre": "Documentary",
@@ -182,7 +210,20 @@
       "genre_share_of_catalog": 0.05969985759666995,
       "list_only_genre_share": 0.8,
       "hated_genre_share": 0.0,
-      "seed_films_recommended_back": []
+      "seed_films_recommended_back": [],
+      "new_release_picks": [
+        "Still: A Michael J. Fox Movie",
+        "The Holdovers",
+        "20 Days in Mariupol",
+        "Spinal Tap II: The End Continues",
+        "Borat Subsequent Moviefilm",
+        "Wham!",
+        "I'm Still Here",
+        "The Odyssey",
+        "Avatar: The Way of Water",
+        "Avatar: Fire and Ash"
+      ],
+      "new_release_genre_share": 0.3
     },
     "romance fan": {
       "genre": "Romance",
@@ -241,7 +282,20 @@
       "genre_share_of_catalog": 0.15253587468506957,
       "list_only_genre_share": 0.6,
       "hated_genre_share": 0.1,
-      "seed_films_recommended_back": []
+      "seed_films_recommended_back": [],
+      "new_release_picks": [
+        "Sonic the Hedgehog 3",
+        "Frankenstein",
+        "Asteroid City",
+        "Ladies First",
+        "Ali G: Who Iz I?",
+        "Scream",
+        "The Holdovers",
+        "Scream 7",
+        "Blue Moon",
+        "The Odyssey"
+      ],
+      "new_release_genre_share": 0.1
     },
     "western fan": {
       "genre": "Western",
@@ -300,7 +354,20 @@
       "genre_share_of_catalog": 0.019717384160368057,
       "list_only_genre_share": 0.7,
       "hated_genre_share": 0.0,
-      "seed_films_recommended_back": []
+      "seed_films_recommended_back": [],
+      "new_release_picks": [
+        "Cry Macho",
+        "Furiosa: A Mad Max Saga",
+        "Horizon: An American Saga - Chapter 1",
+        "Juror #2",
+        "Father Mother Sister Brother",
+        "Project Hail Mary",
+        "Weapons",
+        "Deadpool & Wolverine",
+        "Gladiator II",
+        "The Odyssey"
+      ],
+      "new_release_genre_share": 0.2
     },
     "sci-fi fan": {
       "genre": "Sci-Fi",
@@ -359,7 +426,20 @@
       "genre_share_of_catalog": 0.08089604556906561,
       "list_only_genre_share": 0.9,
       "hated_genre_share": 0.2,
-      "seed_films_recommended_back": []
+      "seed_films_recommended_back": [],
+      "new_release_picks": [
+        "Indiana Jones and the Dial of Destiny",
+        "The Matrix Resurrections",
+        "The End of Oak Street",
+        "Captain America: Brave New World",
+        "Thor: Love and Thunder",
+        "Song Sung Blue",
+        "Avatar: The Way of Water",
+        "Guardians of the Galaxy Volume 3",
+        "Avatar: Fire and Ash",
+        "Terminator: Dark Fate"
+      ],
+      "new_release_genre_share": 0.6
     },
     "war films": {
       "genre": "War",
@@ -418,7 +498,20 @@
       "genre_share_of_catalog": 0.040584949063424254,
       "list_only_genre_share": 0.7,
       "hated_genre_share": 0.1,
-      "seed_films_recommended_back": []
+      "seed_films_recommended_back": [],
+      "new_release_picks": [
+        "All Quiet on the Western Front",
+        "Border 2",
+        "Avatar: The Way of Water",
+        "Greyhound",
+        "Gladiator II",
+        "Napoleon",
+        "Avatar: Fire and Ash",
+        "One Battle After Another",
+        "Blood & Gold",
+        "The Odyssey"
+      ],
+      "new_release_genre_share": 0.4
     },
     "musicals": {
       "genre": "Musical",
@@ -477,7 +570,20 @@
       "genre_share_of_catalog": 0.03390294665352175,
       "list_only_genre_share": 0.7,
       "hated_genre_share": 0.0,
-      "seed_films_recommended_back": []
+      "seed_films_recommended_back": [],
+      "new_release_picks": [
+        "Toy Story 5",
+        "The Odyssey",
+        "Project Hail Mary",
+        "Oppenheimer",
+        "One Battle After Another",
+        "Elvis",
+        "Dune: Part Two",
+        "F1: The Movie",
+        "Sinners",
+        "The Holdovers"
+      ],
+      "new_release_genre_share": 0.0
     }
   },
   "empty_list_picks": [

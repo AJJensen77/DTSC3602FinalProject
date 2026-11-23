@@ -123,7 +123,9 @@ export default function MoviePage() {
               {m.imdb_rating ? `${m.imdb_rating.toFixed(1)} / 10` : "—"}
             </InfoRow>
             <InfoRow label="IMDb votes">{m.imdb_votes ? m.imdb_votes.toLocaleString() : "—"}</InfoRow>
-            <InfoRow label="MovieLens ratings">{m.movielens_ratings.toLocaleString()}</InfoRow>
+            <InfoRow label="MovieLens ratings">
+              {m.movielens_ratings ? m.movielens_ratings.toLocaleString() : m.is_new ? "New release" : "—"}
+            </InfoRow>
           </div>
         </aside>
 
@@ -196,7 +198,11 @@ export default function MoviePage() {
       <section className="flex flex-col gap-3">
         <div>
           <h2 className="text-lg font-semibold">More like this</h2>
-          <p className="text-sm text-muted-foreground">Movies that the same kinds of viewers finished and loved.</p>
+          <p className="text-sm text-muted-foreground">
+            {m.is_new
+              ? "Movies with the same director, cast, genres and era."
+              : "Movies that the same kinds of viewers finished and loved."}
+          </p>
         </div>
         {sims === null ? (
           <MovieGrid>

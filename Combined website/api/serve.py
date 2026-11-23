@@ -23,7 +23,8 @@ from pydantic import BaseModel, Field, field_validator
 
 # The pickled models refer to classes in the `combined`, `listmodel` and `gbmodel` packages.
 HERE = Path(__file__).resolve().parent
-for p in (HERE.parent, HERE.parents[1] / "List taste model", HERE.parents[1] / "Gradient boost model"):
+for p in (HERE.parent, HERE.parents[1] / "List taste model", HERE.parents[1] / "Gradient boost model",
+          HERE.parents[1] / "FilmPalate" / "D4_submission"):
     sys.path.insert(0, str(p))
 
 ARTIFACTS = HERE / "artifacts"
@@ -47,11 +48,13 @@ def load():
     catalog["title"] = catalog["title"].map(display_title)
     catalog["search_key"] = catalog["title"].str.lower()
     catalog = catalog.set_index("movieId", drop=False)
-    # Genre filter masks over the list model's films (it generates the candidates).
-    lm = bundle["combined"].list_model
-    g = catalog["genres"].reindex(lm.item_ids_).fillna("").astype(str)
-    masks = {name: g.str.contains(name, regex=False).to_numpy()
-             for name in bundle["combined"].gb_model.genres_}
+    # Genre filter masks over the catalog films (main picks) and the newer films.
+    site = bundle["site"]
+    masks = {}
+    for part, ids in (("catalog", site.combined.list_model.item_ids_), ("new", site.new_ids)):
+        g = catalog["genres"].reindex(ids).fillna("").astype(str)
+        masks[part] = {name: g.str.contains(name, regex=False).to_numpy()
+                       for name in site.combined.gb_model.genres_}
     return bundle, catalog, masks, None
 
 
@@ -60,7 +63,7 @@ _bundle, _catalog, _genre_masks, _load_error = load()
 
 app = FastAPI(
     title="ReelPicks Combined Recommender API",
-    version="2.0.0",
+    version="2.1.0",
     description=("Watch lists and ratings in, recommendations out. Candidates come from the "
                  "list taste model; the gradient boost model predicts stars and re-ranks them."),
 )
@@ -70,7 +73,7 @@ app.add_middleware(CORSMiddleware, allow_origins=["*"], allow_methods=["*"], all
 def require():
     if _bundle is None:
         raise HTTPException(status_code=503, detail=f"Model artifact not loaded: {_load_error}")
-    return _bundle["combined"], _catalog
+    return _bundle["site"], _catalog
 
 
 # -- schemas ------------------------------------------------------------------
@@ -89,6 +92,7 @@ class MovieDetail(Movie):
     imdb_votes: int | None
     movielens_ratings: int
     has_similar: bool
+    is_new: bool
 
 
 class RatingIn(BaseModel):
@@ -110,6 +114,7 @@ class RecommendRequest(BaseModel):
     plan_to_watch: list[int] = Field(default_factory=list, max_length=MAX_ITEMS)
     genres: list[str] = Field(default_factory=list, description="Optional: only these genres (any match)")
     k: int = Field(10, ge=1, le=30)
+    k_new: int = Field(10, ge=0, le=30, description="How many newer (2017+) films to return")
 
 
 class BecauseOf(BaseModel):
@@ -124,6 +129,7 @@ class Recommendation(Movie):
 
 class RecommendResponse(BaseModel):
     recommendations: list[Recommendation]
+    new_releases: list[Recommendation]
     n_ratings_used: int
     n_list_items_used: int
     used_gradient_boost: bool
@@ -189,8 +195,8 @@ def info():
 
 @app.get("/genres", response_model=list[str])
 def genres():
-    comb, _ = require()
-    return sorted(g for g in comb.gb_model.genres_ if g not in HIDDEN_GENRES)
+    site, _ = require()
+    return sorted(g for g in site.combined.gb_model.genres_ if g not in HIDDEN_GENRES)
 
 
 @app.get("/movies/starter", response_model=list[Movie])
@@ -205,7 +211,7 @@ def search(q: str = Query(..., min_length=2, max_length=100), limit: int = Query
     _, cat = require()
     hits = cat[cat["search_key"].str.contains(q.strip().lower(), regex=False)]
     # Best-known first: most people searching mean the famous film.
-    hits = hits.sort_values(["n_ratings", "imdb_votes"], ascending=False).head(limit)
+    hits = hits.sort_values(["imdb_votes", "n_ratings"], ascending=False).head(limit)
     return [to_movie(r) for _, r in hits.iterrows()]
 
 
@@ -230,19 +236,20 @@ def movie(movie_id: int):
     return MovieDetail(**to_movie(row),
                        imdb_votes=None if pd.isna(row["imdb_votes"]) else int(row["imdb_votes"]),
                        movielens_ratings=int(row["n_ratings"]),
-                       has_similar=bool(row["in_list_model"]))
+                       has_similar=bool(row["in_list_model"]), is_new=bool(row["is_new"]))
 
 
 @app.get("/movies/{movie_id}/similar", response_model=list[Movie])
 def similar(movie_id: int, k: int = Query(12, ge=1, le=30)):
-    comb, cat = require()
+    site, cat = require()
     check_ids([movie_id], cat, status=404)
-    return [to_movie(cat.loc[m]) for m in comb.similar(movie_id, k) if m in cat.index]
+    return [to_movie(cat.loc[m]) for m in site.similar(movie_id, k) if m in cat.index]
 
 
 @app.post("/recommend", response_model=RecommendResponse)
 def recommend(req: RecommendRequest):
-    comb, cat = require()
+    site, cat = require()
+    comb = site.combined
     ratings = {r.movie_id: r.rating for r in req.ratings}
     if len(ratings) != len(req.ratings):
         raise HTTPException(status_code=422, detail="each movie may be rated only once")
@@ -251,17 +258,25 @@ def recommend(req: RecommendRequest):
     if bad:
         raise HTTPException(status_code=422, detail=f"unknown genres: {bad}")
 
-    allowed = None
+    allowed = allowed_new = None
     if req.genres:
-        allowed = np.logical_or.reduce([_genre_masks[g] for g in req.genres])
-    recs = comb.recommend_one(ratings, req.finished, req.plan_to_watch, allowed=allowed, k=req.k)
+        allowed = np.logical_or.reduce([_genre_masks["catalog"][g] for g in req.genres])
+        allowed_new = np.logical_or.reduce([_genre_masks["new"][g] for g in req.genres])
+    picks, newer = site.recommend(ratings, req.finished, req.plan_to_watch, allowed_catalog=allowed,
+                                  allowed_new=allowed_new, k=req.k, k_new=req.k_new)
 
-    out = []
-    for r in recs:
-        b = r["because"]
-        because = BecauseOf(movie_id=b, title=cat.at[b, "title"]) if b in cat.index else None
-        out.append(Recommendation(**to_movie(cat.loc[r["movieId"]]),
-                                  predicted_rating=r["predicted_rating"], because=because))
+    def rows(recs):
+        out = []
+        for r in recs:
+            if r["movieId"] not in cat.index:
+                continue
+            b = r["because"]
+            because = BecauseOf(movie_id=b, title=cat.at[b, "title"]) if b in cat.index else None
+            out.append(Recommendation(**to_movie(cat.loc[r["movieId"]]),
+                                      predicted_rating=r["predicted_rating"], because=because))
+        return out
+
+    out = rows(picks)
     n_items = len(set(ratings) | set(req.finished) | set(req.plan_to_watch))
     used_gb = len(ratings) >= comb.min_ratings_for_gb
     note = None
@@ -272,7 +287,8 @@ def recommend(req: RecommendRequest):
         note = f"Rate {need} more movie{'s' if need != 1 else ''} to turn on star predictions."
     elif len(out) < req.k:
         note = f"Only {len(out)} films match this genre selection."
-    return RecommendResponse(recommendations=out, n_ratings_used=len(ratings),
+    return RecommendResponse(recommendations=out, new_releases=rows(newer),
+                             n_ratings_used=len(ratings),
                              n_list_items_used=n_items, used_gradient_boost=used_gb,
                              min_ratings_for_gradient_boost=comb.min_ratings_for_gb,
                              genres=req.genres, note=note)

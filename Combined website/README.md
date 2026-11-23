@@ -11,7 +11,8 @@ score what they've seen, and get recommendations from their lists.
   ([/docs](https://bhattaraiishika--reelpicks-combined-api-fastapi-app.us-east.modal.run/docs))
 
 This folder doesn't change anything outside it. It reuses `List taste model/listmodel/`,
-`Gradient boost model/gbmodel/` and the shared evaluation code unchanged. FilmPalate
+`Gradient boost model/gbmodel/`, `FilmPalate/D4_submission/watchlist/` and the shared
+evaluation code unchanged. FilmPalate
 (Yager's D4 app on the List taste model alone) is separate, in `FilmPalate/`.
 
 ## How the two models are mixed (`combined/blend.py`)
@@ -25,6 +26,30 @@ This folder doesn't change anything outside it. It reuses `List taste model/list
 
 Each recommendation also says *why*: "Because of X on your list" (the list film closest
 in taste). "More like this" on a movie page uses the List taste model's fingerprints.
+
+## Newer films: 2017 to today (`combined/site.py`)
+
+The List taste model only knows films with 20+ MovieLens ratings by Nov 2019. The site
+adds every IMDb feature film released **2017-2026 with 1,000+ IMDb votes** (IMDb snapshot
+2026-11-23), reusing Yager's `WatchlistRanker` from `FilmPalate/D4_submission/watchlist/`:
+
+- **15,151 newer films** (7,038 MovieLens never had + 8,113 MovieLens has but with too few
+  ratings by 2019) each borrow a taste fingerprint from their 10 closest catalog films by
+  IMDb description (genres, director, top cast, decade). They can be searched, put on
+  lists and scored, and they count toward the person's taste.
+- **"New releases for you"** (the 2,695 with 10,000+ votes, Yager's tested cut-off) are
+  ranked by IMDb buzz + 0.25 × IMDb rating + **2.0 × the person's taste**. Yager's
+  backtest (2015-16 films held out as "new") found taste adds little offline precision
+  (weight 0 → 0.197, 0.25 → 0.194, 1.0 → 0.168 tune precision@10, vs 0.170 for "most
+  voted"). But at his chosen 0.25 the row was nearly the same for everyone: our 8 test
+  users' new-release rows overlapped 75%, and only 10% of picks matched their genre. At
+  2.0 the overlap is 11% and the genre match is 41% (5% for an empty list). We chose
+  following the person's list. 2.0 itself is beyond his grid and not backtested.
+- "More like this" for a newer film compares descriptions (same director, cast, genres).
+- Posters: films MovieLens doesn't have get their TMDB id from TMDB's `/find` by IMDb id
+  (all 92,103 catalog films have one).
+- Main picks are unchanged: they still come from the evaluated combined model on the
+  18,258 catalog films.
 
 ## Results (report half, 2,953 users, same protocol as both model folders)
 
@@ -77,6 +102,7 @@ made-up users (horror, animation, documentary, romance, western, sci-fi, war, mu
   alone (a horror Plan to watch list gives 100% horror).
 - Rating the same films 1★ instead of 4.5★ drops that genre to 0-20%.
 - Nothing already on a list is recommended back.
+- New releases: 41% of each persona's picks are in their genre (5% for an empty list).
 
 Details are in `results/persona_check.json`.
 
@@ -106,11 +132,11 @@ Next.js + shadcn/ui on Vercel, accounts and lists in Supabase (`web/supabase/sch
 
 | Page | What it does |
 |---|---|
-| `/` | Logged out: sign up / browse. Logged in: "You might be interested in", "Because you finished X", Plan to watch shelf |
-| `/browse` | Search any of 85,065 films; add to a list or score it from the card |
+| `/` | Logged out: sign up / browse. Logged in: "You might be interested in", "New releases for you", "Because you finished X", Plan to watch shelf |
+| `/browse` | Search any of 92,103 films (through 2026); add to a list or score it from the card |
 | `/movie/[id]` | Your entry (status + score), info, trailer, **More like this** |
 | `/list` | My list: All / Finished watching / Plan to watch tabs, stats, scores, status, sort |
-| `/for-you` | Recommendations with genre filters and predicted stars |
+| `/for-you` | Recommendations with genre filters and predicted stars, plus new releases |
 | `/login`, `/signup` | Supabase email + password accounts |
 
 Hovering a poster plays a muted ~30 s trailer clip (YouTube via TMDB). Posters and
@@ -127,7 +153,7 @@ taste model artifact (`uv run python "List taste model/evaluate_list_model.py"`)
 uv run python "Gradient boost model/prepare_imdb.py"     # IMDb features (~5 min)
 uv run python "Combined website/evaluate_combined.py"    # fit GB as evaluated, tune + test blend (~1 h)
 uv run python "Combined website/audit_bias.py"           # bias audit -> results/site_settings.json (~8 GB RAM)
-uv run python "Combined website/build_site.py"           # site model -> api/artifacts/ (~5 min)
+uv run python "Combined website/build_site.py"           # site model + newer films -> api/artifacts/ (~25 min; TMDB_API_KEY for posters)
 uv run python "Combined website/check_personas.py"       # do picks follow the list?
 PYTHONUTF8=1 uv run modal deploy "Combined website/api/modal_serve.py"
 cd "Combined website/web" && npm ci && npx vercel deploy --prod
@@ -145,7 +171,8 @@ API with `uv run uvicorn --app-dir "Combined website" api.serve:app --reload`.
 | `combined/blend.py` | `CombinedRecommender`: the mix, used by the evaluation and the API |
 | `evaluate_combined.py` | Fits the gradient boost model as Yager evaluated it; tunes and tests the blend |
 | `audit_bias.py` | Popularity / coverage / personalization / user-group audit; picks the site setting |
-| `build_site.py` | Refreshes both models with ratings through 2019-11 for the site |
+| `combined/site.py` | `SiteRecommender`: the combined model + newer films (via FilmPalate's `WatchlistRanker`) |
+| `build_site.py` | Refreshes both models with ratings through 2019-11, adds 2017-2026 films, looks up posters |
 | `check_personas.py` | Made-up users: do recommendations follow their lists? |
 | `api/serve.py`, `api/modal_serve.py` | FastAPI service and its Modal deployment |
 | `web/` | The website |

@@ -111,6 +111,15 @@ function Dashboard() {
         </p>
       )}
 
+      {!recs.error && (recs.loading || (recs.data?.new_releases.length ?? 0) > 0) && (
+        <Shelf
+          title={empty ? "Popular new releases (2017 to today)" : "New releases for you (2017 to today)"}
+          href="/for-you#new"
+          movies={recs.data?.new_releases ?? null}
+          loading={recs.loading}
+        />
+      )}
+
       {because && because.similar.length > 0 && (
         <Shelf title={`Because you finished ${because.seed.title}`} href={`/movie/${because.seed.movie_id}`} movies={because.similar} />
       )}

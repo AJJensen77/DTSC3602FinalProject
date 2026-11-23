@@ -27,7 +27,8 @@ import pandas as pd
 
 HERE = Path(__file__).resolve().parent
 ROOT = HERE.parent
-for p in (HERE, ROOT / "List taste model", ROOT / "Gradient boost model"):
+for p in (HERE, ROOT / "FilmPalate" / "D4_submission", ROOT / "List taste model",
+          ROOT / "Gradient boost model"):
     sys.path.insert(0, str(p))
 
 ART = HERE / "api" / "artifacts"
@@ -48,7 +49,8 @@ PERSONAS = {
 
 def main() -> None:
     bundle = joblib.load(ART / "site_bundle.joblib")
-    comb = bundle["combined"]
+    site = bundle["site"]
+    comb = site.combined
     cat = pd.read_parquet(ART / "catalog.parquet").set_index("movieId")
     genres = cat["genres"].fillna("").str.split("|")
     lm_ids = set(comb.list_model.item_ids_.tolist())
@@ -69,7 +71,10 @@ def main() -> None:
         return [cat.at[m, "title"] for m in ids]
 
     def picks(**kw):
-        return [r["movieId"] for r in comb.recommend_one(k=10, **kw)]
+        return [r["movieId"] for r in site.recommend(k=10, k_new=0, **kw)[0]]
+
+    def new_picks(**kw):
+        return [r["movieId"] for r in site.recommend(k=0, k_new=10, **kw)[1]]
 
     empty = picks(ratings={})
     out, report = {}, []
@@ -85,6 +90,7 @@ def main() -> None:
         base = np.mean([has(m, genre) for m in empty])
         catalog_share = np.mean([has(m, genre) for m in lm_ids])
         leaked = sorted(set(r_rated) & set(seeds))
+        r_new = new_picks(ratings=ratings)
         rec_sets[name] = set(r_rated)
         out[name] = {
             "genre": genre, "seed_films": titles(seeds), "picks_rated_4_5": titles(r_rated),
@@ -94,13 +100,16 @@ def main() -> None:
             "list_only_genre_share": float(np.mean([has(m, genre) for m in r_lists])),
             "hated_genre_share": float(np.mean([has(m, genre) for m in r_low])),
             "seed_films_recommended_back": titles(leaked),
+            "new_release_picks": titles(r_new),
+            "new_release_genre_share": float(np.mean([has(m, genre) for m in r_new])) if r_new else None,
         }
         report.append(
             f"\n{name.upper()} ({genre}): {match:.0%} of picks are {genre} "
             f"(empty-list user: {base:.0%}, catalog: {catalog_share:.0%}); list-only: "
             f"{out[name]['list_only_genre_share']:.0%}; if they hated those films: "
             f"{out[name]['hated_genre_share']:.0%}\n  seeds: {titles(seeds)[:5]}...\n"
-            f"  picks: {titles(r_rated)}")
+            f"  picks: {titles(r_rated)}\n"
+            f"  new releases ({out[name]['new_release_genre_share']:.0%} {genre}): {titles(r_new)[:6]}")
 
     names = list(rec_sets)
     overlaps = [len(rec_sets[a] & rec_sets[b]) / 10 for i, a in enumerate(names) for b in names[i + 1:]]
@@ -108,6 +117,8 @@ def main() -> None:
     seeds = out["horror fan"]["seed_films"]
     plan_ids = [m for m in cat.index if cat.at[m, "title"] in set(seeds)][:N_SEED]
     r_plan = picks(ratings={}, plan_to_watch=plan_ids)
+    empty_new = new_picks(ratings={})
+    report.append(f"\nBrand-new user's new releases: {titles(empty_new)}")
     summary = {
         "mean_overlap_between_personas_top10": float(np.mean(overlaps)),
         "max_overlap_between_personas_top10": float(np.max(overlaps)),
@@ -116,6 +127,9 @@ def main() -> None:
         "personas_with_seed_films_recommended_back": int(sum(
             bool(v["seed_films_recommended_back"]) for v in out.values())),
         "plan_to_watch_only_horror_share": float(np.mean([has(m, plan[0]) for m in r_plan])),
+        "mean_new_release_genre_share": float(np.mean([v["new_release_genre_share"] or 0 for v in out.values()])),
+        "mean_new_release_genre_share_empty_user": float(np.mean([
+            np.mean([has(m, g) for m in empty_new]) for g, _ in PERSONAS.values()])),
     }
     report.append(f"\nSUMMARY {json.dumps(summary, indent=2)}")
     (HERE / "results").mkdir(exist_ok=True)
