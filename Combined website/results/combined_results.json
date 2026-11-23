@@ -1,0 +1,189 @@
+{
+  "n_candidates": 100,
+  "selected": {
+    "gb_weight": 1.0,
+    "demote_below_like": false,
+    "tune_precision_at_10": 0.2186251269895022,
+    "min_ratings_for_gb": 1
+  },
+  "report": {
+    "combined": {
+      "precision_at_10": 0.21601760921097193,
+      "recall_at_10": 0.05563884808938911,
+      "ndcg_at_10": 0.23272478363467472,
+      "hit_rate_at_10": 0.727395868608195,
+      "liked_share_of_rated_recs": 0.854749443637104,
+      "mean_recs_per_user": 10.0,
+      "distinct_films_recommended": 591,
+      "share_recs_top1pct_films": 0.5480189637656621,
+      "median_train_ratings_of_recs": 16046.0,
+      "n_users": 2953
+    },
+    "list_model": {
+      "precision_at_10": 0.20822891974263463,
+      "recall_at_10": 0.0524046315044504,
+      "ndcg_at_10": 0.22538743402482514,
+      "hit_rate_at_10": 0.7101252963088385,
+      "liked_share_of_rated_recs": 0.8375621544497948,
+      "mean_recs_per_user": 10.0,
+      "distinct_films_recommended": 569,
+      "share_recs_top1pct_films": 0.5085336945479174,
+      "median_train_ratings_of_recs": 13734.0,
+      "n_users": 2953
+    },
+    "gradient_boost": {
+      "precision_at_10": 0.1760582458516763,
+      "recall_at_10": 0.04388860747407435,
+      "ndcg_at_10": 0.1912350267999641,
+      "hit_rate_at_10": 0.6332543176430748,
+      "liked_share_of_rated_recs": 0.8577781372572515,
+      "mean_recs_per_user": 9.978665763630207,
+      "distinct_films_recommended": 696,
+      "share_recs_top1pct_films": 0.7088268232259816,
+      "median_train_ratings_of_recs": 30499.0,
+      "n_users": 2953
+    },
+    "baseline": {
+      "precision_at_10": 0.1647477141889604,
+      "recall_at_10": 0.03916114893331629,
+      "ndcg_at_10": 0.17989097214558067,
+      "hit_rate_at_10": 0.593972231628852,
+      "liked_share_of_rated_recs": 0.7793737586591096,
+      "mean_recs_per_user": 10.0,
+      "distinct_films_recommended": 223,
+      "share_recs_top1pct_films": 0.628818151032848,
+      "median_train_ratings_of_recs": 25961.0,
+      "n_users": 2953
+    },
+    "combined_minus_list_model": {
+      "precision": {
+        "diff": 0.0077886894683372844,
+        "ci95_low": 0.005248899424314257,
+        "ci95_high": 0.010193870640027088,
+        "n_users": 2953
+      },
+      "recall": {
+        "diff": 0.0032342165849387175,
+        "ci95_low": 0.0018927343775499348,
+        "ci95_high": 0.004572695994644493,
+        "n_users": 2946
+      },
+      "ndcg": {
+        "diff": 0.007337349609849569,
+        "ci95_low": 0.00494306978433536,
+        "ci95_high": 0.009589280871027688,
+        "n_users": 2946
+      },
+      "hit_rate": {
+        "diff": 0.017270572299356586,
+        "ci95_low": 0.008804605485946495,
+        "ci95_high": 0.025745005079580042,
+        "n_users": 2953
+      }
+    },
+    "combined_minus_gradient_boost": {
+      "precision": {
+        "diff": 0.03995936335929563,
+        "ci95_low": 0.034676600067727735,
+        "ci95_high": 0.04503894344734169,
+        "n_users": 2953
+      },
+      "recall": {
+        "diff": 0.011750240615314768,
+        "ci95_low": 0.008961859120969516,
+        "ci95_high": 0.0143077926444402,
+        "n_users": 2946
+      },
+      "ndcg": {
+        "diff": 0.04148975683471063,
+        "ci95_low": 0.03539561828520459,
+        "ci95_high": 0.047077075808320684,
+        "n_users": 2946
+      },
+      "hit_rate": {
+        "diff": 0.09414155096512021,
+        "ci95_low": 0.07890281070098205,
+        "ci95_high": 0.10938875719607175,
+        "n_users": 2953
+      }
+    },
+    "combined_minus_baseline": {
+      "precision": {
+        "diff": 0.051269895022011513,
+        "ci95_low": 0.04551303758889264,
+        "ci95_high": 0.05658736877751439,
+        "n_users": 2953
+      },
+      "recall": {
+        "diff": 0.01647769915607282,
+        "ci95_low": 0.013802092576385561,
+        "ci95_high": 0.01905384753977928,
+        "n_users": 2946
+      },
+      "ndcg": {
+        "diff": 0.05283381148909403,
+        "ci95_low": 0.04657404345491679,
+        "ci95_high": 0.05870063722602134,
+        "n_users": 2946
+      },
+      "hit_rate": {
+        "diff": 0.13342363697934304,
+        "ci95_low": 0.11615306467998646,
+        "ci95_high": 0.149339654588554,
+        "n_users": 2953
+      }
+    }
+  },
+  "few_ratings": [
+    {
+      "ratings_known": 1,
+      "combined_precision_at_10": 0.06864205892312902,
+      "list_model_precision_at_10": 0.06847273958686081,
+      "gradient_boost_precision_at_10": 0.05072807314595327,
+      "baseline_precision_at_10": 0.05743311886217406,
+      "combined_minus_list": 0.0001693193362682016,
+      "ci95_low": -0.001286826955638334,
+      "ci95_high": 0.0014908567558415127
+    },
+    {
+      "ratings_known": 3,
+      "combined_precision_at_10": 0.07856417202844565,
+      "list_model_precision_at_10": 0.07748052827632916,
+      "gradient_boost_precision_at_10": 0.0536065018625127,
+      "baseline_precision_at_10": 0.057704029800203185,
+      "combined_minus_list": 0.0010836437521164917,
+      "ci95_low": -0.00023789366745682376,
+      "ci95_high": 0.0025059261767693872
+    },
+    {
+      "ratings_known": 5,
+      "combined_precision_at_10": 0.08289874703691162,
+      "list_model_precision_at_10": 0.08357602438198443,
+      "gradient_boost_precision_at_10": 0.05485946495089739,
+      "baseline_precision_at_10": 0.05797494073823231,
+      "combined_minus_list": -0.0006772773450728076,
+      "ci95_low": -0.0021342702336606847,
+      "ci95_high": 0.0007788689468337282
+    },
+    {
+      "ratings_known": 10,
+      "combined_precision_at_10": 0.09099221131053167,
+      "list_model_precision_at_10": 0.0915340331865899,
+      "gradient_boost_precision_at_10": 0.058144260074500506,
+      "baseline_precision_at_10": 0.05868608195055876,
+      "combined_minus_list": -0.000541821876058246,
+      "ci95_low": -0.002065695902472062,
+      "ci95_high": 0.0009481882831019302
+    },
+    {
+      "ratings_known": 20,
+      "combined_precision_at_10": 0.10077886894683373,
+      "list_model_precision_at_10": 0.1,
+      "gradient_boost_precision_at_10": 0.06051473078225533,
+      "baseline_precision_at_10": 0.06136132746359634,
+      "combined_minus_list": 0.0007788689468337283,
+      "ci95_low": -0.00081357941076871,
+      "ci95_high": 0.0023374534371825217
+    }
+  ]
+}

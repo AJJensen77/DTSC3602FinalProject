@@ -1,0 +1,8 @@
+{
+  "list_popularity_weight": 2.0,
+  "gb_weight": 1.0,
+  "demote_below_like": false,
+  "min_ratings_for_gb": 1,
+  "rule": "least popularity-driven combined model that is still more accurate (precision@10) than every single model",
+  "source": "audit_bias.py report-half comparison (first run, 2026-11-23); min_ratings_for_gb from evaluate_combined.py's short-history check at popularity weight 6 (the blend never hurt at any history size). The short-history check at weight 2 was not completed: the re-run was stopped by low memory on this machine."
+}

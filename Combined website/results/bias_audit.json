@@ -1,0 +1,14 @@
+{
+  "note": "Report half, 2,953 users. Copied from the completed comparison step of audit_bias.py (first run, 2026-11-23); that run was stopped before writing its files to change the selection rule, and the re-run was stopped by low memory. Re-run audit_bias.py to regenerate this file plus the by-group and short-history tables.",
+  "columns": ["precision_at_10", "hit_rate_at_10", "distinct_films", "share_top1pct", "share_top10pct", "mean_overlap_between_users", "long_tail_precision_at_10"],
+  "table": {
+    "baseline":          [0.165, 0.594, 223,  0.629, 1.000, 0.174, 0.074],
+    "list_model_pop6":   [0.208, 0.710, 569,  0.509, 1.000, 0.044, 0.106],
+    "combined_pop6":     [0.216, 0.727, 591,  0.548, 1.000, 0.045, 0.102],
+    "list_model_pop2":   [0.204, 0.700, 1400, 0.389, 0.991, 0.021, 0.120],
+    "combined_pop2":     [0.210, 0.716, 1415, 0.433, 0.985, 0.023, 0.116],
+    "gradient_boost (Yager's reported)": [0.175, 0.626, 763, 0.702, null, null, null]
+  },
+  "gb_weight_by_list_pop_weight": {"6.0": 1.0, "2.0": 1.0},
+  "site_settings": "see site_settings.json"
+}
