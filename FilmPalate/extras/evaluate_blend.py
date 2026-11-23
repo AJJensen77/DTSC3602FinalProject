@@ -11,7 +11,7 @@ the best weight on the tune half and reports it on the report half against
 popular picks (group protocol; both skip films the user rated in training).
 
 Usage (repo root, ~10 min):
-    uv run python "FilmPalate/evaluate_blend.py"
+    uv run python "FilmPalate/extras/evaluate_blend.py"
 """
 
 import json
@@ -22,8 +22,8 @@ import numpy as np
 import pandas as pd
 
 HERE = Path(__file__).resolve().parent
-ROOT = HERE.parent
-for p in (HERE, ROOT / "List taste model", ROOT / "Gradient boost model"):
+ROOT = HERE.parents[1]          # repo root
+for p in (HERE.parent / "D4_submission", ROOT / "List taste model", ROOT / "Gradient boost model"):
     sys.path.insert(0, str(p))
 
 import evaluate_hybrid as ev  # noqa: E402

@@ -10,7 +10,7 @@ website's home page: top picks, new releases, "because you liked / want to watch
 rows and genre rows. Both work with empty lists (popular, well-liked films).
 
 Local dev (from the repo root):
-    uv run uvicorn --app-dir "FilmPalate" api.serve:app --reload
+    uv run uvicorn --app-dir "FilmPalate/D4_submission" api.serve:app --reload
     -> http://localhost:8000/docs
 """
 
@@ -26,8 +26,9 @@ from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel, Field, field_validator, model_validator
 
 # The pickled pipeline refers to classes in these packages.
-APP_DIR = Path(__file__).resolve().parents[1]
-for p in (APP_DIR, APP_DIR.parent / "List taste model", APP_DIR.parent / "Gradient boost model"):
+APP_DIR = Path(__file__).resolve().parents[1]   # FilmPalate/D4_submission
+ROOT = APP_DIR.parents[1]                        # repo root (not present on Modal)
+for p in (APP_DIR, ROOT / "List taste model", ROOT / "Gradient boost model"):
     if p.exists():
         sys.path.insert(0, str(p))
 

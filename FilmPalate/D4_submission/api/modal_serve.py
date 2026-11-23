@@ -1,8 +1,8 @@
 """Modal deployment of the FilmPalate API.
 
 Usage (from the repo root, after build_model.py has written api/artifacts/):
-    uv run modal serve  "FilmPalate/api/modal_serve.py"   # temporary dev URL
-    uv run modal deploy "FilmPalate/api/modal_serve.py"   # public URL
+    uv run modal serve  "FilmPalate/D4_submission/api/modal_serve.py"   # temporary dev URL
+    uv run modal deploy "FilmPalate/D4_submission/api/modal_serve.py"   # public URL
 """
 
 from pathlib import Path
@@ -10,8 +10,8 @@ from pathlib import Path
 import modal
 
 HERE = Path(__file__).resolve().parent
-APP_DIR = HERE.parent
-ROOT = APP_DIR.parent
+APP_DIR = HERE.parent          # FilmPalate/D4_submission
+ROOT = APP_DIR.parents[1]      # repo root
 
 app = modal.App("filmpalate-api")
 

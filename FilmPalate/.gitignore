@@ -1,8 +1,8 @@
-# Rebuild with: uv run python "FilmPalate/build_model.py"
-api/artifacts/*.joblib
-api/artifacts/*.parquet
-web/node_modules/
-web/.next/
-web/.env*.local
-web/.vercel/
+# Model files: rebuild with  uv run python "FilmPalate/D4_submission/build_model.py"
+D4_submission/api/artifacts/*.joblib
+D4_submission/api/artifacts/*.parquet
+extras/web/node_modules/
+extras/web/.next/
+extras/web/.env*.local
+extras/web/.vercel/
 __pycache__/

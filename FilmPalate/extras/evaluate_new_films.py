@@ -19,7 +19,7 @@ reported on the report half, the group's protocol. Also reported: within-user AU
 i.e. how often a liked film outscores a rated-but-not-liked one (0.5 = chance).
 
 Usage (repo root, ~2 min):
-    uv run python "FilmPalate/evaluate_new_films.py"
+    uv run python "FilmPalate/extras/evaluate_new_films.py"
 """
 
 import json
@@ -32,8 +32,8 @@ import pandas as pd
 import scipy.sparse as sp
 
 HERE = Path(__file__).resolve().parent
-ROOT = HERE.parent
-for p in (HERE, ROOT / "List taste model", ROOT / "Gradient boost model"):
+ROOT = HERE.parents[1]          # repo root
+for p in (HERE.parent / "D4_submission", ROOT / "List taste model", ROOT / "Gradient boost model"):
     sys.path.insert(0, str(p))
 
 import evaluate_hybrid as ev  # noqa: E402  (shared cohort + bootstrap code)

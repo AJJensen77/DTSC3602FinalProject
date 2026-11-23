@@ -10,7 +10,7 @@ As on the site, a user whose N ratings are all <= 2 stars (nothing positive) get
 the popular picks. Want to Watch cannot be tested: MovieLens has no such data.
 
 Usage (repo root, ~5 min):
-    uv run python "FilmPalate/evaluate_min_ratings.py"
+    uv run python "FilmPalate/extras/evaluate_min_ratings.py"
 """
 
 import json
@@ -21,8 +21,8 @@ import numpy as np
 import pandas as pd
 
 HERE = Path(__file__).resolve().parent
-ROOT = HERE.parent
-for p in (HERE, ROOT / "List taste model", ROOT / "Gradient boost model"):
+ROOT = HERE.parents[1]          # repo root
+for p in (HERE.parent / "D4_submission", ROOT / "List taste model", ROOT / "Gradient boost model"):
     sys.path.insert(0, str(p))
 
 import evaluate_hybrid as ev  # noqa: E402

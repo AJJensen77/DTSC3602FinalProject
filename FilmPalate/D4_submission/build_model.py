@@ -11,12 +11,12 @@
   settings chosen in ``evaluate_new_films.py``.
 
 Writes (gitignored, rebuild with this script, ~10 min):
-    FilmPalate/api/artifacts/watchlist_pipeline.joblib
-    FilmPalate/api/artifacts/catalog.parquet
-    FilmPalate/api/artifacts/sample_predictions.json   (for local vs deployed checks)
+    FilmPalate/D4_submission/api/artifacts/watchlist_pipeline.joblib
+    FilmPalate/D4_submission/api/artifacts/catalog.parquet
+    FilmPalate/extras/sample_predictions.json   (for local vs deployed checks)
 
 Usage (repo root):
-    uv run python "FilmPalate/build_model.py"
+    uv run python "FilmPalate/D4_submission/build_model.py"
 """
 
 import json
@@ -31,7 +31,8 @@ import pandas as pd
 import sklearn
 
 HERE = Path(__file__).resolve().parent
-ROOT = HERE.parent
+ROOT = HERE.parents[1]          # repo root
+EXTRAS = HERE.parent / "extras"
 for p in (HERE, ROOT / "List taste model", ROOT / "Gradient boost model"):
     sys.path.insert(0, str(p))
 
@@ -55,7 +56,7 @@ SITE_POPULARITY_WEIGHT = 2.0
 # ...but users with few ratings need popularity to count much more (evaluate_blend.py,
 # tuned per history size): (up to this many ratings, weight). Want to Watch counts 0.5.
 POPULARITY_SCHEDULE = ((3, 40.0), (10, 25.0), (50, 15.0), (100, 8.0), (200, 4.0))
-BACKTEST = HERE / "results" / "new_films_backtest.json"
+BACKTEST = EXTRAS / "results" / "new_films_backtest.json"
 NEW_SETTINGS = (json.loads(BACKTEST.read_text())["selected"] if BACKTEST.exists()
                 else {"content_alpha": 10.0, "new_popularity_weight": 1.0})
 
@@ -181,7 +182,7 @@ def main() -> None:
         print(f"\n  {name}: {user}")
         print("    top: " + "; ".join(title.get(m, str(m)) for m in top))
         print("    new: " + "; ".join(title.get(m, str(m)) for m in new_top))
-    (ARTIFACTS / "sample_predictions.json").write_text(json.dumps(out, indent=2))
+    (EXTRAS / "sample_predictions.json").write_text(json.dumps(out, indent=2))
 
 
 if __name__ == "__main__":

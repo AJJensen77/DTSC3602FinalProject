@@ -1,12 +1,12 @@
 """Check that the deployed API returns the same recommendations as the local pipeline.
 
 ``build_model.py`` saves reference outputs of the fitted pipeline for three requests
-in ``api/artifacts/sample_predictions.json``. This sends the same requests to the
+in ``sample_predictions.json`` (next to this script). This sends the same requests to the
 deployed API (``POST /recommend``) and compares film ids and order, then checks the
 health, pipeline-info and error responses.
 
 Usage (repo root):
-    uv run python "FilmPalate/verify_deployment.py" [API_URL]
+    uv run python "FilmPalate/extras/verify_deployment.py" [API_URL]
 """
 
 import json
@@ -31,7 +31,7 @@ def call(url, body=None):
 
 def main():
     base = (sys.argv[1] if len(sys.argv) > 1 else DEFAULT_URL).rstrip("/")
-    samples = json.loads((HERE / "api" / "artifacts" / "sample_predictions.json").read_text())
+    samples = json.loads((HERE / "sample_predictions.json").read_text())
     ok = True
 
     def check(name, cond, detail=""):

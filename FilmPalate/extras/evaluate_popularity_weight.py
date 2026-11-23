@@ -7,7 +7,7 @@ script scores both on the *report* half with the group's protocol and metric cod
 bootstrap CIs against the popularity baseline and against weight 6.
 
 Usage (repo root, ~5 min):
-    uv run python "FilmPalate/evaluate_popularity_weight.py"
+    uv run python "FilmPalate/extras/evaluate_popularity_weight.py"
 """
 
 import json
@@ -17,8 +17,8 @@ from pathlib import Path
 import pandas as pd
 
 HERE = Path(__file__).resolve().parent
-ROOT = HERE.parent
-for p in (HERE, ROOT / "List taste model", ROOT / "Gradient boost model"):
+ROOT = HERE.parents[1]          # repo root
+for p in (HERE.parent / "D4_submission", ROOT / "List taste model", ROOT / "Gradient boost model"):
     sys.path.insert(0, str(p))
 
 import evaluate_hybrid as ev  # noqa: E402
